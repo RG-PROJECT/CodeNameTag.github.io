@@ -6,15 +6,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
       <title> MakeNameTag</title>
       <!-- Bootstrap -->
-      <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <!-- <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
 
       <!-- CDN -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
       <link rel="stylesheet" href="./css/style.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-      <script src="./js/canvas2image.js"></script>
-      <script src="./js/html2canvas.js"></script>
+
     </head>
 
     <body>
@@ -39,8 +37,8 @@
           <div class="col-md-4">
             <div class="custom-area text-center" >
                 <h1>Input Area</h1>
-                <form id="userInput" class="" action="index.html" method="post">
                 <ul class="input">
+                  <form id="userInput" class="" action="index.html" method="post">
                     <div class="form-group">
                       <label for="inputName">이름</label>
                       <input type="text" class="form-control" id="InputName" placeholder ="name">
@@ -53,6 +51,7 @@
                       <label for="inputPosition">직책</label>
                       <input type="text" class="form-control" id="InputPosition" placeholder ="position">
                     </div>
+                  </form>
                   <div class="language">
                     <label for="selLanguage">언어</label>
                     <select class="form-control" id="selLanguage">
@@ -75,11 +74,9 @@
                       <option value="">eclipse</option>
                     </select>
                   </div>
-                  <input class="btn btn-info" type="button" value="Share">
-                  <input class="btn btn-success generation" type="button" value="Generation">
-                  <a href="#" target="_blank" id="save_as_image" download="NameTag.png">Download</a>
+                  <input class="btn btn-info" type="submit" value="Share">
+                  <input class="btn btn-success" type="submit" value="Generation">
                 </ul>
-                </form>
             </div>
           </div>
           <div class="col-md-4">
@@ -106,8 +103,10 @@
       </div>
 
 
-      <script>
 
+      <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+      <script>
       	var cardLangTemplate = {
 			swift : { varType: 'let ', semicolon : false, commentStart: '/*', commentEnd: '*/'},
 			c     : { varType: 'char[] ', semicolon: true, commentStart: '/*', commentEnd: '*/' },
@@ -124,19 +123,19 @@
       	$(document).ready(function() {
       		// 이름 변경 적용
       		$('#InputName').on("change paste keyup", function() {
-   				//console.log($(this).val()); 
+   				//console.log($(this).val());
    				$('#cardPreview .name').text('"' + $(this).val() + '"');
 			});
 
       		// 직급
 			$('#InputPosition').on("change paste keyup", function() {
-   				//console.log($(this).val()); 
+   				//console.log($(this).val());
    				$('#cardPreview .position').text($(this).val());
 			});
 
 			// 회사
 			$('#InputCorp').on("change paste keyup", function() {
-   				//console.log($(this).val()); 
+   				//console.log($(this).val());
    				$('#cardPreview .company').text($(this).val());
 			});
 
@@ -169,32 +168,8 @@
 				}
 			});
 
-			$('#userInput input.generation').click(function() {
-				console.log('click');
-				html2canvas($("div.nameTag"), {
-		            	onrendered: function(canvas) {
-
-		                // theCanvas = canvas;
-		                // document.body.appendChild(canvas);
-		                // Convert and download as image 
-//		                document.body.appendChild('<a href="'+Canvas2Image.saveAsPNG(canvas)+'">asdf</a>');	
-						var imageData = Canvas2Image.saveAsPNG(canvas);
-						$("#save_as_image").attr('href', imageData);
-//						console.log(imageData);
-		                // Canvas2Image.saveAsPNG(canvas); 
-		                // $("#img-out").append(canvas);
-		                // Clean up 
-		                //document.body.removeChild(canvas);
-		            }
-		        });
-			});
-
-
       	});
-
-
       </script>
-
     </body>
 
 </html>

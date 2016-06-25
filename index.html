@@ -15,96 +15,92 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
       <script src="./js/canvas2image.js"></script>
       <script src="./js/html2canvas.js"></script>
+      <!-- 링크 태그 없애기 -->
+      <style type="text/css">
+        a.no-uline { text-decoration:none }
+      </style>
     </head>
 
     <body>
-      <header>
-        <nav class="top-header">
-          <div class="row">
-            <div class="col-md-2">
-                <h2 class="logo">
-                  <a href="#">Logo</a>
-                </h2>
-            </div>
-            <div class="col-md-10">
-              <h2> This is a header place</h2>
-            </div>
-          </div>
-        </nav>
-        <hr>
-      </header>
+        <div class="nav-bar">
+          <nav class="top-header">
+            <a href="#" title="nametag">
+              <img class="logo-img" src="NAMETAG.png">
+            </a>
+          </nav>
+        </div>
 
-      <div calss = "container">
+      <div calss = "container-fluid">
         <div class="row">
+          <!-- 레이아웃을 위한 빈 컬럼 -->
+          <div class="col-md-2"></div>
+          <!-- 입력 영역 -->
           <div class="col-md-4">
             <div class="custom-area text-center" >
                 <h1>Input Area</h1>
                 <form id="userInput" class="" action="index.html" method="post">
-                <ul class="input">
+                <div class="input">
                     <div class="form-group">
-                      <label for="inputName">이름</label>
                       <input type="text" class="form-control" id="InputName" placeholder ="name">
                     </div>
                     <div class="form-group">
-                      <label for="inputCorp">회사</label>
                       <input type="text" class="form-control" id="InputCorp" placeholder ="corp">
                     </div>
                     <div class="form-group">
-                      <label for="inputPosition">직책</label>
                       <input type="text" class="form-control" id="InputPosition" placeholder ="position">
                     </div>
-                  <div class="language">
-                    <label for="selLanguage">언어</label>
-                    <select class="form-control" id="selLanguage">
-                      <option>Language</option>
-                      <option value="c">C</option>
-                      <option value="cpp">C++</option>
-                      <option value="java">JAVA</option>
-                      <option value="javascript">Javascript</option>
-                      <option value="python">Python</option>
-                      <option value="swift">Swift</option>
-                    </select>
-                  </div>
-                  <div class="theme">
-                    <label for="selTheme">테마</label>
-                    <select class="form-control" id="selTheme">
-                      <option>Theme</option>
-                      <option value="default">default</option>
-                      <option value="sunset">sunset</option>
-                      <option value="">dark</option>
-                      <option value="">eclipse</option>
-                    </select>
-                  </div>
-                  <input class="btn btn-info" type="button" value="Share">
-                  <input class="btn btn-success generation" type="button" value="Generation">
-                  <a href="#" target="_blank" id="save_as_image" download="NameTag.png">Download</a>
-                </ul>
-                </form>
+
+                      <div class="language">
+                        <select class="form-control selBox" id="selLanguage">
+                          <option>Language</option>
+                          <option value="c">C</option>
+                          <option value="cpp">C++</option>
+                          <option value="java">JAVA</option>
+                          <option value="javascript">Javascript</option>
+                          <option value="python">Python</option>
+                          <option value="swift">Swift</option>
+                        </select>
+                      </div>
+                      <div class="theme">
+                        <select class="form-control selBox" id="selTheme">
+                          <option>Theme</option>
+                          <option value="default">default</option>
+                          <option value="sunset">sunset</option>
+                          <option value="">dark</option>
+                          <option value="">eclipse</option>
+                        </select>
+                      </div>
+                </div>
+                <!-- </form> -->
             </div>
           </div>
-          <div class="col-md-4">
+          <!-- 미리보기 영역 -->
+          <div class="col-md-4 bottom-padding">
             <div class="preveiw-area text-center">
                 <h1>Preview Area</h1>
                 <div class="nameTag">
-					<div class="preview" id="cardPreview">
-						<span class="varName"><span class="varType"></span> name <span class="symbol">=</span> </span>
-						<span class="name">"name"</span><span class="semicolon symbol"></span>
-						<span class="comment"><span class="cstart"></span><span class="position">position</span><span class="cend"></span></span>
-						<span class="company">company</span>
-					</div>
-
+        					<div class="preview" id="cardPreview">
+        						<span class="varName"><span class="varType"></span> name <span class="symbol">=</span> </span>
+        						<span class="name">"name"</span><span class="semicolon symbol"></span>
+        						<span class="comment"><span class="cstart"></span><span class="position">position</span><span class="cend"></span></span>
+        						<span class="company">company</span>
+        					</div>
                 </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="user-guide text-center">
-                <h1>User Guide</h1>
-            </div>
+          <div class="col-md-2"></div>
           </div>
-          </div>
+        </div>
         </div>
       </div>
 
+      <!-- <div class="footer"> -->
+        <div class="action-btn">
+          <input class="btn btn-info" type="button" value="twit">
+          <input class="btn btn-success generation" type="button" value="Generation">
+        </div>
+      <!-- </div> -->
+  </form>
 
       <script>
 
@@ -124,19 +120,19 @@
       	$(document).ready(function() {
       		// 이름 변경 적용
       		$('#InputName').on("change paste keyup", function() {
-   				//console.log($(this).val()); 
+   				//console.log($(this).val());
    				$('#cardPreview .name').text('"' + $(this).val() + '"');
 			});
 
       		// 직급
 			$('#InputPosition').on("change paste keyup", function() {
-   				//console.log($(this).val()); 
+   				//console.log($(this).val());
    				$('#cardPreview .position').text($(this).val());
 			});
 
 			// 회사
 			$('#InputCorp').on("change paste keyup", function() {
-   				//console.log($(this).val()); 
+   				//console.log($(this).val());
    				$('#cardPreview .company').text($(this).val());
 			});
 
@@ -176,14 +172,14 @@
 
 		                // theCanvas = canvas;
 		                // document.body.appendChild(canvas);
-		                // Convert and download as image 
-//		                document.body.appendChild('<a href="'+Canvas2Image.saveAsPNG(canvas)+'">asdf</a>');	
+		                // Convert and download as image
+//		                document.body.appendChild('<a href="'+Canvas2Image.saveAsPNG(canvas)+'">asdf</a>');
 						var imageData = Canvas2Image.saveAsPNG(canvas);
 						$("#save_as_image").attr('href', imageData);
 //						console.log(imageData);
-		                // Canvas2Image.saveAsPNG(canvas); 
+		                // Canvas2Image.saveAsPNG(canvas);
 		                // $("#img-out").append(canvas);
-		                // Clean up 
+		                // Clean up
 		                //document.body.removeChild(canvas);
 		            }
 		        });

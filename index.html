@@ -24,7 +24,7 @@
     <body>
         <div class="nav-bar">
           <nav class="top-header">
-            <a href="#" title="nametag">
+            <a href="/" title="nametag">
               <img class="logo-img" src="NAMETAG.png">
             </a>
           </nav>
@@ -52,9 +52,10 @@
 
                       <div class="language">
                         <select class="form-control selBox" id="selLanguage">
-                          <option>Language</option>
+                          <option value="c">Language</option>
                           <option value="c">C</option>
                           <option value="cpp">C++</option>
+                          <option value="objc">Objective-C</option>
                           <option value="java">JAVA</option>
                           <option value="javascript">Javascript</option>
                           <option value="python">Python</option>
@@ -63,11 +64,14 @@
                       </div>
                       <div class="theme">
                         <select class="form-control selBox" id="selTheme">
-                          <option>Theme</option>
+                          <option value="default">Theme</option>
                           <option value="default">default</option>
+                          <option value="synhi">synhi</option>
                           <option value="sunset">sunset</option>
-                          <option value="">dark</option>
-                          <option value="">eclipse</option>
+                          <option value="ghb">ghb</option>
+                          <option value="dark">dark</option>
+                          <option value="mono">mono</option>
+                          <option value="eclipse">eclipse</option>
                         </select>
                       </div>
                 </div>
@@ -96,100 +100,205 @@
 
       <!-- <div class="footer"> -->
         <div class="action-btn">
-          <input class="btn btn-info" type="button" value="twit">
+          <input class="btn btn-info share" type="button" value="Share">
           <input class="btn btn-success generation" type="button" value="Generation">
         </div>
       <!-- </div> -->
   </form>
 
-      <script>
+<script>
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
 
-      	var cardLangTemplate = {
-			swift : { varType: 'let ', semicolon : false, commentStart: '/*', commentEnd: '*/'},
-			c     : { varType: 'char[] ', semicolon: true, commentStart: '/*', commentEnd: '*/' },
-			cpp   : { varType: 'std::string', semicolon: true, commentStart: '/*', commentEnd: '*/' },
-			python: { varType: '', semicolon: false, commentStart: '\'\'\'', commentEnd: '\'\'\'' },
-			javascript: { varType: 'var', semicolon: true, commentStart: '/*', commentEnd: '*/' },
-			java  : { varType: 'String', semicolon: true, commentStart: '/*', commentEnd: '*/' }
-		};
-		var cardColorTemplate = {
-			default : { varType :'#3a95ae', varName : '#000', str : '#b22821', comment : '#008d14' },
-			sunset : { varType :'#007020', varName : '#bb60d5', str : '#4070a0', comment : '#60a0b0' }
-		};
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
 
-      	$(document).ready(function() {
-      		// 이름 변경 적용
-      		$('#InputName').on("change paste keyup", function() {
-   				//console.log($(this).val());
-   				$('#cardPreview .name').text('"' + $(this).val() + '"');
-			});
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+var cardLangTemplate = {
+  swift : { varType: 'let ', semicolon : false, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false},
+  c     : { varType: 'char[] ', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false },
+  cpp   : { varType: 'std::string', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false },
+  objc   : { varType: 'NSString', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:true, atsign:true },
+  python: { varType: '', semicolon: false, commentStart: '\'\'\'', commentEnd: '\'\'\'', pointer:false, atsign:false },
+  javascript: { varType: 'var', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false },
+  java  : { varType: 'String', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false }
+};
+var cardColorTemplate = {
+  default : { bg: '#fff', varType :'#3a95ae', varName : '#000', str : '#b22821', comment : '#008d14', txt:'#000' },
+  synhi  : { bg: '#fff', varType :'#007020', varName : '#bb60d5', str : '#4070a0', comment : '#60a0b0', txt:'#000' },
+  sunset  : { bg: '#fffceb', varType :'#375788', varName : '#000', str : '#e63b3f', comment : '#d08631', txt:'#000' },
+  ghb  : { bg: '#fff', varType :'#a41f5b', varName : '#333333', str : '#db4d1d', comment : '#a79896', txt:'#333333' },
+  dark  : { bg: '#0b152b', varType :'#fbe04c', varName : '#4c509a', str : '#66ca51', comment : '#bcbcbc', txt:'#fff' },
+  mono  : { bg: '#272822', varType :'#f34683', varName : '#ede8e5', str : '#ebdf8c', comment : '#888372', txt:'#ede8e5' },
+  eclipse : { bg: '#272822', varType :'#66d9ef', varName : '#f8f8f2', str : '#e6db74', comment : '#75715e', txt:'#f8f8f2' }
+};
 
-      		// 직급
-			$('#InputPosition').on("change paste keyup", function() {
-   				//console.log($(this).val());
-   				$('#cardPreview .position').text($(this).val());
-			});
+$(document).ready(function() {
 
-			// 회사
-			$('#InputCorp').on("change paste keyup", function() {
-   				//console.log($(this).val());
-   				$('#cardPreview .company').text($(this).val());
-			});
+  // 입력 폼에 값이 변하면 프리뷰에 적용되도록 설정
 
-			$('#selLanguage').change(function() {
-				var lang = $(this).val();
-				if (typeof cardLangTemplate[lang] == "object") {
-					$('#cardPreview .varType').text(cardLangTemplate[lang].varType);
-					if (cardLangTemplate[lang].semicolon) {
-						$('#cardPreview .semicolon').text(";");
-					}else {
-						$('#cardPreview .semicolon').text("");
-					}
-					$('#cardPreview .comment .cstart').text(cardLangTemplate[lang].commentStart + ' ');
-					if (cardLangTemplate[lang].commentEnd.length > 0) {
-						$('#cardPreview .comment .cend').text(' ' + cardLangTemplate[lang].commentEnd);
-					}else {
-						$('#cardPreview .comment .cend').text('');
-					}
-				}
-			});
-			$('#selTheme').change(function() {
-				newTemplate = $(this).val();
-				if (typeof cardColorTemplate[newTemplate] == "object") {
-					$('#cardPreview .varType').css('color', cardColorTemplate[newTemplate].varType);
-					$('#cardPreview .varName').css('color', cardColorTemplate[newTemplate].varName);
-					$('#cardPreview .name').css('color', cardColorTemplate[newTemplate].str);
-					$('#cardPreview .comment').css('color', cardColorTemplate[newTemplate].comment);
-				}else {
-					console.log('잘못된 테마 이름 : ' + $(this).val());
-				}
-			});
+  // 이름
+  $('#InputName').on("change paste keyup", function() {
+    //console.log($(this).val()); 
+    $('#cardPreview .name').text('"' + $(this).val() + '"');
+  });
+  // 직급
+  $('#InputPosition').on("change paste keyup", function() {
+    //console.log($(this).val()); 
+    $('#cardPreview .position').text($(this).val());
+  });
+  // 회사
+  $('#InputCorp').on("change paste keyup", function() {
+    //console.log($(this).val()); 
+    $('#cardPreview .company').text($(this).val());
+  });
 
-			$('#userInput input.generation').click(function() {
-				console.log('click');
-				html2canvas($("div.nameTag"), {
-		            	onrendered: function(canvas) {
+  /* 언어 선택 변경 처리 함수 */
+  var changeLanguage = function(lang) {
+    if (typeof cardLangTemplate[lang] == "object") { // 선택한 언어가 배열에 있으면 적용
+      $('#cardPreview .varType').text(cardLangTemplate[lang].varType);
+      // 세미콜론
+      if (cardLangTemplate[lang].semicolon) {
+        $('#cardPreview .semicolon').text(";");
+      }else {
+        $('#cardPreview .semicolon').text("");
+      }
+      // 주석
+      $('#cardPreview .comment .cstart').text(cardLangTemplate[lang].commentStart + ' ');
+      if (cardLangTemplate[lang].commentEnd.length > 0) {
+        $('#cardPreview .comment .cend').text(' ' + cardLangTemplate[lang].commentEnd);
+      }else {
+        $('#cardPreview .comment .cend').text('');
+      }
+      // 포인터
+      if (cardLangTemplate[lang].pointer) {
+        $('#cardPreview .pointer').text('*');
+      }else {
+        $('#cardPreview .pointer').text('');
+      }
+      // @ 기호
+      if (cardLangTemplate[lang].atsign) {
+        $('#cardPreview .atsign').text('@');
+      }else {
+        $('#cardPreview .atsign').text('');
+      }
+    }
+  };
+  // 언어 선택 선택지에 적용
+  $('#selLanguage').change(function() {
+    var lang = $(this).val();
+    changeLanguage(lang);
+  });
 
-		                // theCanvas = canvas;
-		                // document.body.appendChild(canvas);
-		                // Convert and download as image
-//		                document.body.appendChild('<a href="'+Canvas2Image.saveAsPNG(canvas)+'">asdf</a>');
-						var imageData = Canvas2Image.saveAsPNG(canvas);
-						$("#save_as_image").attr('href', imageData);
-//						console.log(imageData);
-		                // Canvas2Image.saveAsPNG(canvas);
-		                // $("#img-out").append(canvas);
-		                // Clean up
-		                //document.body.removeChild(canvas);
-		            }
-		        });
-			});
+  /* 테마 변경 관련 함수 */
+  var changeTheme = function(newTemplate) {
+    if (typeof cardColorTemplate[newTemplate] == "object") {
+      $('.nameTag').css('background-color', cardColorTemplate[newTemplate].bg);
+      $('#cardPreview').css('color', cardColorTemplate[newTemplate].txt);
+      $('#cardPreview .varType').css('color', cardColorTemplate[newTemplate].varType);
+      $('#cardPreview .varName').css('color', cardColorTemplate[newTemplate].varName);
+      
+      $('#cardPreview .name').css('color', cardColorTemplate[newTemplate].str);
+      $('#cardPreview .atsign').css('color', cardColorTemplate[newTemplate].str);
 
+      $('#cardPreview .comment').css('color', cardColorTemplate[newTemplate].comment);
+    }else {
+      console.log('잘못된 테마 이름 : ' + $(this).val());
+    }
+  };
+  // 테마 변경 선택지에 적용
+  $('#selTheme').change(function() {
+    newTemplate = $(this).val();
+    changeTheme(newTemplate);
+  });
 
-      	});
+  // 이미지 팝업 생성
+  $('input.generation').click(function() {
+    html2canvas($("div.nameTag"), {
+              onrendered: function(canvas) {
+                // Canvas2Image를 이용해서 base64로 인코딩 된 png파일을 만든다.
+          var imageData = Canvas2Image.saveAsPNG(canvas);
 
+          // 팝업창 생성 및 세팅
+          var nameTagView = window.open("", "NameTag", "width=316,height=550,menubar=no,status=no,toolbar=no");
 
-      </script>
+          console.log('imagedata : ' + imageData);
+          // img태그로 미리보여주며, 다운로드 링크를 만든다.
+          var popView = '<img src="'+imageData+'"><br>'+'<a href="'+imageData+'" target="_blank" id="save_as_image" download="NameTag.png">Download</a>';
+          // 생성된 팝업창에 작성
+          nameTagView.document.write(popView);
+
+            }
+    });
+  });
+
+  // GET 파라미터
+  // n : 이름
+  // t : 테마
+  // l : 언어
+  // c : 회사
+  // p : 직책
+
+  // 트위터 공유하기 버튼 클릭 이벤트
+  // 트위터 메시지를 보낼 수 있도록 기본 메시지를 입력하고 팝업창을 띄운다.
+  $('input.share').click(function() {
+    // 각 설정 값을 가져온다.
+    var n = $('#InputName').val();
+    var t = $('#selTheme').val();
+    var l = $('#selLanguage').val();
+    var c = $('#InputCorp').val();
+    var p = $('#InputPosition').val();
+    // 사이트 링크
+    var url = "https://n8-g8.github.io/";
+    // 파라미터 생성
+    var param = "?n="+n+"&t="+t+"&l="+l+"&c="+c+"&p="+p;
+    // 트위터 메시지를 GET 파라미터 형태로 넘겨주므로 인코딩
+    var twtMessage = encodeURIComponent("테스트 메시지 " + url + param);
+    // 트윗 날리기 주소의 GET 파라미터로 묶어주고,
+    var popupUrl = "https://twitter.com/intent/tweet?text=" + twtMessage;
+    // 팝업을 띄운다.
+    var shareView = window.open(popupUrl, 'Twitter');
+  });
+  if (typeof getUrlParameter('n') != 'undefined') {
+    // getp 함수 : 파라미터를 받아오고, 파라미터가 존재하지 않으면 공백, 존재하면 그것의 값을 반환
+    // return은 문자형
+    var getp = function(n) {
+      var p = getUrlParameter(n);
+      if (typeof p == 'undefined')
+        return '';
+      else
+        return p;
+    };
+    // 각 파라미터의 값을 가져온다.
+    var n = getp('n');
+    var t = getp('t');
+    var l = getp('l');
+    var c = getp('c');
+    var p = getp('p');
+
+    // 선택지나 값을 설정해주고 및 수정 이벤트 발생(프리뷰 적용이 이벤트를 캐치하여 동작하므로.)
+    $('#InputName').val(n).change();
+    $('#selTheme').val(t).change();
+    $('#selLanguage').val(l).change();
+    $('#InputCorp').val(c).change();
+    $('#InputPosition').val(p).change();
+  }else {
+    // GET 파라미터가 존재하지 않으면 기본 세팅으로 진행한다.
+    console.log('GET 파라미터가 없으므로 기본 세팅으로 이루어집니다.');
+
+    changeLanguage('c');
+    changeTheme('default');
+  }
+
+});
+</script>
 
     </body>
 

@@ -99,7 +99,7 @@ div.nameTag .preview {
 }
 .bubble  {
   right: -23px;
-  top: 38px;
+  top: 45px;
   z-index: 99;
   position: absolute;
   width: 280px;
@@ -123,5 +123,9 @@ div.nameTag .preview {
   width: 0;
   z-index: 1;
   top: -19px;
-  left: 225px;
+  left: 231px;
 }
+#mobileResultArea {
+  width:100%;height: 980px;background-color: rgba(0,0,0,0.5);position:absolute;top: 0;left: 0;display:none;
+}
+

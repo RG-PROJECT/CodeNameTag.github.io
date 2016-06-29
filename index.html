@@ -132,7 +132,13 @@
         </div>
       <!-- </div> -->
   </form>
-
+<div id="mobileResultArea" class="text-center" >
+  <div clas="row" id="resultImage"></div>
+  <div class="row" style="margin-top:20px">
+    <input class="btn btn-info share" type="button" value="Share">
+    <button type="button" class="btn btn-success"  id="mobileDownloadBtn">Download</button>
+    </div>
+</div>
 <script>
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -257,7 +263,8 @@ $(document).ready(function() {
                 // Canvas2Image를 이용해서 base64로 인코딩 된 png파일을 만든다.
                 var imageData = Canvas2Image.saveAsPNG(canvas);
                 if (isMobile()) {
-                  document.location.href = imageData;
+                    $('#resultImage').html('<img src="'+imageData+'" class="center-block">');
+                    $('#mobileResultArea').fadeIn('fast');
                 }else {
                   // 팝업창 생성 및 세팅
                   var nameTagView = window.open("", "NameTag", "width=316,height=550,menubar=no,status=no,toolbar=no");
@@ -271,6 +278,15 @@ $(document).ready(function() {
     });
   });
 
+  // 모바일에서 보여지는 결과하면 토글 처리
+  $('#mobileResultArea').click(function(){
+    $(this).fadeOut('fast');
+  });
+  $('#mobileDownloadBtn').click(function(e) {
+    e.stopPropagation();
+    var imageData = $('#resultImage img').attr('src');
+    window.open(imageData, '_blank');
+  });
   // GET 파라미터
   // n : 이름
   // t : 테마
@@ -331,8 +347,8 @@ $(document).ready(function() {
 
   // information 말풍선 토글
   var showInfo = false;
-  $('#infoToggle').click(function() {
-    console.log('??');
+  $('#infoToggle').click(function(e) {
+  	e.stopPropagation();
     if(showInfo) {
       $('#informationBox').hide();
       showInfo = false;
@@ -340,7 +356,12 @@ $(document).ready(function() {
       $('#informationBox').show();
       showInfo = true;
     }
-
+  });
+  $('body').click(function() {
+	if(showInfo) {
+      $('#informationBox').hide();
+      showInfo = false;
+    }
   });
 });
 </script>

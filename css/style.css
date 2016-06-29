@@ -95,12 +95,16 @@ div.nameTag .preview {
 	bottom : 15px;
 	left : 25px;
 }
-.preview .symbol {
-	color:black;
-}
 /* information 말풍선 */
-.bubble  {
-  position: relative;
+#informationBox {
+  position:relative;
+  display: none;
+}
+.bubble  {  
+  right: -23px;
+  top: 38px;
+  z-index: 99;
+  position: absolute;
   width: 280px;
   height: 160px;
   padding: 0px;

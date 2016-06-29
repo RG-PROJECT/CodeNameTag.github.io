@@ -27,6 +27,25 @@
             <a href="/" title="nametag">
               <img class="logo-img" src="NAMETAG.png">
             </a>
+            <div style="float: right!important;margin-right:0">
+              <div id="informationBox">
+                <div class="bubble">
+                          <dl>
+                            <dt>Input Area</dt>
+                            <dd>이름, 회사, 등을 명찰에 적용할 정보를 입력합니다.</dd>
+                            <dt>Preview Area</dt>
+                            <dd>입력한 값이 적용된 명찰을 미리 확인할 수 있습니다.</dd>
+                            <dt>Generation</dt>
+                            <dd>명찰을 PNG 파일로 생성합니다.</dd>
+                            <dt>Share</dt>
+                            <dd>생성한 명찰을 SNS로 공유할 수 있습니다.</dd>
+                          </dl>
+                </div>
+              </div>
+                <span class="btn" id="infoToggle" style="color:white; padding:0">INFO</span>
+<div style="clear:right"></div>
+            </div>
+
           </nav>
         </div>
 
@@ -131,17 +150,20 @@ var cardLangTemplate = {
   java  : { varType: 'String', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false }
 };
 var cardColorTemplate = {
-  default : { bg: '#fff', varType :'#3a95ae', varName : '#000', str : '#b22821', comment : '#008d14', txt:'#000' },
-  synhi  : { bg: '#fff', varType :'#007020', varName : '#bb60d5', str : '#4070a0', comment : '#60a0b0', txt:'#000' },
-  sunset  : { bg: '#fffceb', varType :'#375788', varName : '#000', str : '#e63b3f', comment : '#d08631', txt:'#000' },
-  ghb  : { bg: '#fff', varType :'#a41f5b', varName : '#333333', str : '#db4d1d', comment : '#a79896', txt:'#333333' },
-  dark  : { bg: '#0b152b', varType :'#fbe04c', varName : '#4c509a', str : '#66ca51', comment : '#bcbcbc', txt:'#fff' },
+  default : { bg: '#fff', varType :'#3a95ae', varName : '#000', str : '#b22821', comment : '#008d14', txt:'#000'},
+  synhi  : { bg: '#fff', varType :'#007020', varName : '#bb60d5', str : '#4070a0', comment : '#60a0b0', txt:'#000'},
+  sunset  : { bg: '#fffceb', varType :'#375788', varName : '#000', str : '#e63b3f', comment : '#d08631', txt:'#000'},
+  ghb  : { bg: '#fff', varType :'#a41f5b', varName : '#333333', str : '#db4d1d', comment : '#a79896', txt:'#333333'},
+  dark  : { bg: '#0b152b', varType :'#fbe04c', varName : '#4c509a', str : '#66ca51', comment : '#bcbcbc', txt:'#fff'},
   mono  : { bg: '#272822', varType :'#f34683', varName : '#ede8e5', str : '#ebdf8c', comment : '#888372', txt:'#ede8e5' },
   eclipse : { bg: '#272822', varType :'#66d9ef', varName : '#f8f8f2', str : '#e6db74', comment : '#75715e', txt:'#f8f8f2' }
 };
 
 $(document).ready(function() {
-
+  var isMobile = function() {
+    try{ document.createEvent("TouchEvent"); return true; }
+    catch(e){ return false; }
+  }
   // 입력 폼에 값이 변하면 프리뷰에 적용되도록 설정
 
   // 이름
@@ -202,6 +224,7 @@ $(document).ready(function() {
     if (typeof cardColorTemplate[newTemplate] == "object") {
       $('.nameTag').css('background-color', cardColorTemplate[newTemplate].bg);
       $('#cardPreview').css('color', cardColorTemplate[newTemplate].txt);
+      $('#cardPreview .symbol').css('color', cardColorTemplate[newTemplate].txt);
       $('#cardPreview .varType').css('color', cardColorTemplate[newTemplate].varType);
       $('#cardPreview .varName').css('color', cardColorTemplate[newTemplate].varName);
       
@@ -224,17 +247,18 @@ $(document).ready(function() {
     html2canvas($("div.nameTag"), {
               onrendered: function(canvas) {
                 // Canvas2Image를 이용해서 base64로 인코딩 된 png파일을 만든다.
-          var imageData = Canvas2Image.saveAsPNG(canvas);
+                var imageData = Canvas2Image.saveAsPNG(canvas);
+                if (isMobile()) {
+                  document.location.href = imageData;
+                }else {
+                  // 팝업창 생성 및 세팅
+                  var nameTagView = window.open("", "NameTag", "width=316,height=550,menubar=no,status=no,toolbar=no");
 
-          // 팝업창 생성 및 세팅
-          var nameTagView = window.open("", "NameTag", "width=316,height=550,menubar=no,status=no,toolbar=no");
-
-          console.log('imagedata : ' + imageData);
-          // img태그로 미리보여주며, 다운로드 링크를 만든다.
-          var popView = '<img src="'+imageData+'"><br>'+'<a href="'+imageData+'" target="_blank" id="save_as_image" download="NameTag.png">Download</a>';
-          // 생성된 팝업창에 작성
-          nameTagView.document.write(popView);
-
+                  // img태그로 미리보여주며, 다운로드 링크를 만든다.
+                  var popView = '<img src="'+imageData+'"><br>'+'<a href="'+imageData+'" target="_blank" id="save_as_image" download="NameTag.png">Download</a>';
+                  // 생성된 팝업창에 작성
+                  nameTagView.document.write(popView);
+                }
             }
     });
   });
@@ -297,6 +321,19 @@ $(document).ready(function() {
     changeTheme('default');
   }
 
+  // information 말풍선 토글
+  var showInfo = false;
+  $('#infoToggle').click(function() {
+    console.log('??');
+    if(showInfo) {
+      $('#informationBox').hide();
+      showInfo = false;
+    }else {
+      $('#informationBox').show();
+      showInfo = true;
+    }
+    
+  });
 });
 </script>
 

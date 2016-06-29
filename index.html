@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
       <title> MakeNameTag</title>
 
       <!-- Font -->
@@ -21,12 +21,16 @@
       <script src="./js/canvas2image.js"></script>
       <script src="./js/html2canvas.js"></script>
 
+      <!-- favicon -->
+      <link rel="shortcut icon" id="favicon" type="image/png" href="favicon.png">
+
       <!-- 스타일 적용 테스트 -->
       <style type="text/css">
       </style>
     </head>
 
     <body>
+      <div calss = "container">
         <div class="nav-bar">
           <nav class="top-header">
             <a href="./index.html" title="nametag" class="nametag">
@@ -57,8 +61,7 @@
           </nav>
         </div>
 
-      <div calss = "container-fluid">
-        <div class="row">
+      <div calss = "container">
           <!-- 레이아웃을 위한 빈 컬럼 -->
           <div class="col-md-2"></div>
           <!-- 입력 영역 -->
@@ -102,7 +105,6 @@
                         </select>
                       </div>
                 </div>
-                <!-- </form> -->
             </div>
           </div>
           <!-- 미리보기 영역 -->
@@ -120,7 +122,6 @@
             </div>
           </div>
           <div class="col-md-2"></div>
-          </div>
         </div>
         </div>
       </div>
@@ -365,7 +366,8 @@ $(document).ready(function() {
   });
 });
 </script>
-
+<!-- body 전체 container div-->
+  </div>
     </body>
 
 </html>

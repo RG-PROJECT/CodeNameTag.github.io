@@ -3,29 +3,35 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
       <title> MakeNameTag</title>
+
+      <!-- Font -->
+      <link href="http://fonts.googleapis.com/earlyaccess/notosansgothic.css" rel="stylesheet">
+      <link href="http://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+
       <!-- Bootstrap -->
       <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
       <!-- CDN -->
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
       <link rel="stylesheet" href="./css/style.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
       <script src="./js/canvas2image.js"></script>
       <script src="./js/html2canvas.js"></script>
-      <!-- 링크 태그 없애기 -->
+
+      <!-- 스타일 적용 테스트 -->
       <style type="text/css">
-        a.no-uline { text-decoration:none }
       </style>
     </head>
 
     <body>
         <div class="nav-bar">
           <nav class="top-header">
-            <a href="/" title="nametag">
-              <img class="logo-img" src="NAMETAG.png">
+            <a href="./index.html" title="nametag" class="nametag">
+              <!-- 메뉴 바 왼쪽 : 타이틀 로고 -->
+              <span id ="title"> NAMETAG </span>
             </a>
             <div style="float: right!important;margin-right:0">
               <div id="informationBox">
@@ -42,8 +48,10 @@
                           </dl>
                 </div>
               </div>
-                <span class="btn" id="infoToggle" style="color:white; padding:0">INFO</span>
-<div style="clear:right"></div>
+              <span class="btn glyphicon glyphicon-info-sign"
+                    id = "infoToggle" style="padding : 0px; color:white; font-size:20px;"
+                    aria-hidden="true"></span>
+              <div style="clear:right"></div>
             </div>
 
           </nav>
@@ -168,17 +176,17 @@ $(document).ready(function() {
 
   // 이름
   $('#InputName').on("change paste keyup", function() {
-    //console.log($(this).val()); 
+    //console.log($(this).val());
     $('#cardPreview .name').text('"' + $(this).val() + '"');
   });
   // 직급
   $('#InputPosition').on("change paste keyup", function() {
-    //console.log($(this).val()); 
+    //console.log($(this).val());
     $('#cardPreview .position').text($(this).val());
   });
   // 회사
   $('#InputCorp').on("change paste keyup", function() {
-    //console.log($(this).val()); 
+    //console.log($(this).val());
     $('#cardPreview .company').text($(this).val());
   });
 
@@ -227,7 +235,7 @@ $(document).ready(function() {
       $('#cardPreview .symbol').css('color', cardColorTemplate[newTemplate].txt);
       $('#cardPreview .varType').css('color', cardColorTemplate[newTemplate].varType);
       $('#cardPreview .varName').css('color', cardColorTemplate[newTemplate].varName);
-      
+
       $('#cardPreview .name').css('color', cardColorTemplate[newTemplate].str);
       $('#cardPreview .atsign').css('color', cardColorTemplate[newTemplate].str);
 
@@ -332,7 +340,7 @@ $(document).ready(function() {
       $('#informationBox').show();
       showInfo = true;
     }
-    
+
   });
 });
 </script>

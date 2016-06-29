@@ -128,16 +128,15 @@
 
       <!-- <div class="footer"> -->
         <div class="action-btn">
-          <input class="btn btn-info share" type="button" value="Share">
           <input class="btn btn-success generation" type="button" value="Generation">
         </div>
       <!-- </div> -->
   </form>
-<div id="mobileResultArea" class="text-center" >
+<div id="resultArea" class="text-center" >
   <div clas="row" id="resultImage"></div>
   <div class="row" style="margin-top:20px">
     <input class="btn btn-info share" type="button" value="Share">
-    <button type="button" class="btn btn-success"  id="mobileDownloadBtn">Download</button>
+    <a class="btn btn-success" href="#" role="button" id="downloadBtn" download="NameTag.png">Download</a>
     </div>
 </div>
 <script>
@@ -263,30 +262,24 @@ $(document).ready(function() {
               onrendered: function(canvas) {
                 // Canvas2Image를 이용해서 base64로 인코딩 된 png파일을 만든다.
                 var imageData = Canvas2Image.saveAsPNG(canvas);
-                if (isMobile()) {
-                    $('#resultImage').html('<img src="'+imageData+'" class="center-block">');
-                    $('#mobileResultArea').fadeIn('fast');
-                }else {
-                  // 팝업창 생성 및 세팅
-                  var nameTagView = window.open("", "NameTag", "width=316,height=550,menubar=no,status=no,toolbar=no");
+                
+                $('#resultImage').html('<img src="'+imageData+'" class="center-block">');
+                $('#resultArea').fadeIn('fast');
+                $('#downloadBtn').attr('href', imageData);
+                $('input.generation').fadeOut('fast');
 
-                  // img태그로 미리보여주며, 다운로드 링크를 만든다.
-                  var popView = '<img src="'+imageData+'"><br>'+'<a href="'+imageData+'" target="_blank" id="save_as_image" download="NameTag.png">Download</a>';
-                  // 생성된 팝업창에 작성
-                  nameTagView.document.write(popView);
-                }
+                
             }
     });
   });
 
   // 모바일에서 보여지는 결과하면 토글 처리
-  $('#mobileResultArea').click(function(){
+  $('#resultArea').click(function(){
+    $('input.generation').fadeIn('fast');
     $(this).fadeOut('fast');
   });
-  $('#mobileDownloadBtn').click(function(e) {
+  $('#resultArea #downloadBtn').click(function(e) {
     e.stopPropagation();
-    var imageData = $('#resultImage img').attr('src');
-    window.open(imageData, '_blank');
   });
   // GET 파라미터
   // n : 이름
@@ -305,11 +298,11 @@ $(document).ready(function() {
     var c = $('#InputCorp').val();
     var p = $('#InputPosition').val();
     // 사이트 링크
-    var url = "https://n8-g8.github.io/";
+    var url = "https://codenametag.github.io/";
     // 파라미터 생성
     var param = "?n="+n+"&t="+t+"&l="+l+"&c="+c+"&p="+p;
     // 트위터 메시지를 GET 파라미터 형태로 넘겨주므로 인코딩
-    var twtMessage = encodeURIComponent("테스트 메시지 " + url + param);
+    var twtMessage = encodeURIComponent("코드 스타일 명함을 만들어봤어요! " + url + param);
     // 트윗 날리기 주소의 GET 파라미터로 묶어주고,
     var popupUrl = "https://twitter.com/intent/tweet?text=" + twtMessage;
     // 팝업을 띄운다.
@@ -341,7 +334,7 @@ $(document).ready(function() {
   }else {
     // GET 파라미터가 존재하지 않으면 기본 세팅으로 진행한다.
     console.log('GET 파라미터가 없으므로 기본 세팅으로 이루어집니다.');
-
+    
     changeLanguage('c');
     changeTheme('default');
   }
@@ -358,10 +351,10 @@ $(document).ready(function() {
       showInfo = true;
     }
   });
-  $('body').click(function() {
-	if(showInfo) {
-      $('#informationBox').hide();
-      showInfo = false;
+  $('#informationBox').click(function() {
+    if(showInfo) {
+        $('#informationBox').hide();
+        showInfo = false;
     }
   });
 });

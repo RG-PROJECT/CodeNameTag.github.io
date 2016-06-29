@@ -15,13 +15,13 @@
   bottom: 0;
 	left: 50%;
   /* Firefox */
-  left: -moz-calc( 50% - 86px );
+  left: -moz-calc( 50% - 55.5px);
   /* WebKit */
-  left: -webkit-calc( 50% - 86px );
+  left: -webkit-calc( 50% - 55.5px);
   /* Opera */
-  left: -o-calc( 50% - 86px );
+  left: -o-calc( 50% - 55.5px);
   /* Standard */
-  left: calc( 50% - 86px );
+  left: calc( 50% - 55.5px);
   margin: .6rem;
   margin-left: 2rem;
 }
@@ -126,6 +126,6 @@ div.nameTag .preview {
   top: -19px;
   left: 231px;
 }
-#mobileResultArea {
+#resultArea {
   width:100%;height: 980px;background-color: rgba(0,0,0,0.5);position:absolute;top: 0;left: 0;display:none;
 }

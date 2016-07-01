@@ -102,6 +102,7 @@
                           <option value="dark">dark</option>
                           <option value="mono">mono</option>
                           <option value="eclipse">eclipse</option>
+                          <option value="ironman">ironman</option>
                         </select>
                       </div>
                 </div>
@@ -194,7 +195,8 @@ var cardColorTemplate = {
   ghb  : { bg: '#fff', varType :'#a41f5b', varName : '#333333', str : '#db4d1d', comment : '#a79896', txt:'#333333'},
   dark  : { bg: '#0b152b', varType :'#fbe04c', varName : '#4c509a', str : '#66ca51', comment : '#bcbcbc', txt:'#fff'},
   mono  : { bg: '#272822', varType :'#f34683', varName : '#ede8e5', str : '#ebdf8c', comment : '#888372', txt:'#ede8e5' },
-  eclipse : { bg: '#272822', varType :'#66d9ef', varName : '#f8f8f2', str : '#e6db74', comment : '#75715e', txt:'#f8f8f2' }
+  eclipse : { bg: '#272822', varType :'#66d9ef', varName : '#f8f8f2', str : '#e6db74', comment : '#75715e', txt:'#f8f8f2' },
+  ironman : { bg: '#272822', varType :'#c61e1e', varName : '#beba46', str : '#ebdf8c', comment : '#8bd3fb', txt:'#ede8e5' }
 };
 
 $(document).ready(function() {
@@ -248,6 +250,13 @@ $(document).ready(function() {
         $('#cardPreview .atsign').text('@');
       }else {
         $('#cardPreview .atsign').text('');
+      }
+
+      // 파이썬일 경우, varName에 display:block 속성 빼기
+      if (lang == 'python') {
+        $('#cardPreview .varName').css('display', 'inline');
+      }else {
+        $('#cardPreview .varName').css('display', 'block');
       }
     }
   };

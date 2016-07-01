@@ -111,7 +111,7 @@
           <div class="col-md-4 bottom-padding">
             <div class="preveiw-area text-center">
                 <h1>Preview Area</h1>
-                <div class="nameTag">
+                <div class="nameTag" id="nameTag">
         					<div class="preview" id="cardPreview">
         						<span class="varName"><span class="varType"></span> name <span class="symbol">=</span> </span>
         						<span class="name">"name"</span><span class="semicolon symbol"></span>
@@ -282,19 +282,40 @@ $(document).ready(function() {
 
   // 이미지 팝업 생성
   $('input.generation').click(function() {
-    html2canvas($("div.nameTag"), {
-              onrendered: function(canvas) {
-                // Canvas2Image를 이용해서 base64로 인코딩 된 png파일을 만든다.
-                var imageData = Canvas2Image.saveAsPNG(canvas);
-
-                $('#resultImage').html('<img src="'+imageData+'" class="center-block">');
-                $('#resultArea').fadeIn('fast');
-                $('#downloadBtn').attr('href', imageData);
-                $('input.generation').fadeOut('fast');
-
-
-            }
-    });
+// Trying new way
+      var w = 1000;
+      var h = 1000;
+      var gencanvas = document.createElement('canvas');
+      gencanvas.width = w * 2;
+      gencanvas.height = h * 2;
+      gencanvas.style.width = w + 'px';
+      gencanvas.style.height = h + 'px';
+      var context = gencanvas.getContext('2d');
+      context.scale(2, 2);
+      html2canvas(document.getElementById("nameTag"), {
+        canvas: gencanvas,
+        onrendered: function(canvas) {
+          var offset = $("div.nameTag").offset();
+          var context = canvas.getContext('2d');
+          var imageData = context.getImageData(offset.left*2, offset.top*2, context.canvas.width, context.canvas.height);
+          context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+          canvas.width = 306*2;
+          canvas.height= 510*2;
+          canvas.style.width = 306 + 'px';
+          canvas.style.height = 510 + 'px';          
+          context.putImageData(imageData, 0, 0);
+          // document.body.appendChild(canvas);
+          // $('#resultImage').html('<img src="'+imageData+'" class="center-block">');
+          $('#resultImage').html('');
+          $('#resultImage').append(canvas);
+          $('#resultArea').fadeIn('fast');
+          $('input.generation').fadeOut('fast');
+          var imageData = Canvas2Image.saveAsPNG(canvas);
+          $('#downloadBtn').attr('href', imageData);
+        } // ,
+//        width: 306,
+//        height: 510
+      });
   });
 
   // 모바일에서 보여지는 결과하면 토글 처리

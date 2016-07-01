@@ -345,9 +345,15 @@ $(document).ready(function() {
     // 사이트 링크
     var url = "https://codenametag.github.io/";
     // 파라미터 생성
-    var param = "?n="+n+"&t="+t+"&l="+l+"&c="+c+"&p="+p;
+    var param = "?n="+encodeURIComponent(n)
+                +"&t="+encodeURIComponent(t)
+                +"&l="+encodeURIComponent(l)
+                +"&c="+encodeURIComponent(c)
+                +"&p="+encodeURIComponent(p);
+
+    var fullUrl = url + param;
     // 트위터 메시지를 GET 파라미터 형태로 넘겨주므로 인코딩
-    var twtMessage = encodeURIComponent("코드 스타일 명함을 만들어봤어요! " + url + param);
+    var twtMessage = encodeURIComponent("코드 스타일 명함을 만들어봤어요! " + fullUrl);
     // 트윗 날리기 주소의 GET 파라미터로 묶어주고,
     var popupUrl = "https://twitter.com/intent/tweet?text=" + twtMessage;
     // 팝업을 띄운다.

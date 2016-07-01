@@ -1,3 +1,5 @@
+
+
 .nav-bar{
 	background-color: #383d40;
 	display: block;
@@ -10,20 +12,29 @@
 	background-color: #383d40;
 }
 
+.copyright{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	margin: 15px;
+	padding-left: 5%;
+}
+
 .action-btn{
 	position: fixed;
   bottom: 0;
-	left: 50%;
+	right : 0;
+	/*left: 50%;*/
   /* Firefox */
-  left: -moz-calc( 50% - 55.5px);
+  /*left: -moz-calc( 50% - 65.5px);*/
   /* WebKit */
-  left: -webkit-calc( 50% - 55.5px);
+  /*left: -webkit-calc( 50% - 65.5px);*/
   /* Opera */
-  left: -o-calc( 50% - 55.5px);
+  /*left: -o-calc( 50% - 65.5px);*/
   /* Standard */
-  left: calc( 50% - 55.5px);
-  margin: .6rem;
-  margin-left: 2rem;
+  /*left: calc( 50% - 65.5px);*/
+  margin: 8px;
+	padding-right: 10%;
 }
 
 .top-header {
@@ -79,8 +90,9 @@ div.nameTag .preview {
 	font-family: 'Noto Sans KR', sans-serif;
 	font-size:20pt;
 }
+
 .bottom-padding{
-	padding-bottom: 50px;
+	padding-bottom: 70px;
 }
 .preview .varName {
 	display: block;

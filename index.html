@@ -126,12 +126,35 @@
         </div>
       </div>
 
-      <!-- <div class="footer"> -->
-        <div class="action-btn">
-          <input class="btn btn-success generation" type="button" value="Generation">
+
+      <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+
+          <div class="action-btn">
+            <input class="btn btn-success generation" type="button" value="Generation">
+              </form>
+          </div>
+
+          <div class="copyright">
+            © 2016
+             <a href="https://github.com/CodeNameTag">N8G8</a>
+             <a href="https://github.com/CodeNameTag/CodeNameTag.github.io"> | Github</a>
+          </div>
+
         </div>
-      <!-- </div> -->
-  </form>
+      </nav>
+
+  <!-- <div class="container footer">
+      <div class="copyright">
+        <hr>
+        © 2016
+         <a href="https://github.com/CodeNameTag">N8G8</a>
+         <a href="https://github.com/CodeNameTag/CodeNameTag.github.io"> | Github</a>
+      </div>
+  </div> -->
+
+
+
 <div id="resultArea" class="text-center" >
   <div id="resultBackground"></div>
   <div id="resultImage"></div>
@@ -263,13 +286,13 @@ $(document).ready(function() {
               onrendered: function(canvas) {
                 // Canvas2Image를 이용해서 base64로 인코딩 된 png파일을 만든다.
                 var imageData = Canvas2Image.saveAsPNG(canvas);
-                
+
                 $('#resultImage').html('<img src="'+imageData+'" class="center-block">');
                 $('#resultArea').fadeIn('fast');
                 $('#downloadBtn').attr('href', imageData);
                 $('input.generation').fadeOut('fast');
 
-                
+
             }
     });
   });
@@ -335,7 +358,7 @@ $(document).ready(function() {
   }else {
     // GET 파라미터가 존재하지 않으면 기본 세팅으로 진행한다.
     console.log('GET 파라미터가 없으므로 기본 세팅으로 이루어집니다.');
-    
+
     changeLanguage('c');
     changeTheme('default');
   }

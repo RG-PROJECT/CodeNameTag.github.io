@@ -17,13 +17,16 @@
       <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
       <!-- CDN -->
-      <link rel="stylesheet" href="./css/style.css">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+      <link rel="stylesheet" href="./css/style.css">
+      <link rel='stylesheet' href='./css/spectrum.css' />
+
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
       <script src="./js/canvas2image.js"></script>
       <script src="./js/html2canvas.js"></script>
-
+      <script src='./js/spectrum.js'></script>
       <!-- favicon -->
       <link rel="shortcut icon" id="favicon" type="image/png" href="favicon.png">
 
@@ -109,6 +112,18 @@
                           <option value="ironman">ironman</option>
                         </select>
                       </div>
+                      <div class="colorPick">
+                        <div style="margin-bottom:5px;">
+                          <input type='text' data-lnk="bg" />
+                          <input type='text' data-lnk="varType" />
+                          <input type='text' data-lnk="varName" />
+                        </div>
+                        <div>
+                          <input type='text' data-lnk="str" />
+                          <input type='text' data-lnk="comment" />
+                          <input type='text' data-lnk="txt" />
+                        </div>
+                      </div>
                 </div>
             </div>
           </div>
@@ -130,7 +145,6 @@
         </div>
         </div>
       </div>
-
 
       <nav class="navbar navbar-default navbar-fixed-bottom">
         <div class="container">
@@ -266,6 +280,36 @@ $(document).ready(function() {
     changeLanguage(lang);
   });
 
+
+
+  // 테마 선택 변경에 따라 컬러 피커 세팅
+  var setSpectrum = function(tempColor) {
+    $('input[data-lnk="bg"]').spectrum("set", tempColor.bg);
+    $('input[data-lnk="varType"]').spectrum("set", tempColor.varType);
+    $('input[data-lnk="varName"]').spectrum("set", tempColor.varName);
+    $('input[data-lnk="str"]').spectrum("set", tempColor.str);
+    $('input[data-lnk="comment"]').spectrum("set", tempColor.comment);
+    $('input[data-lnk="txt"]').spectrum("set", tempColor.txt);
+  };
+  // 컬러피커 선택 움지임에 맞춰 미리보기에 적용한다.
+  var changeChoiceColor = function(color, lnk) {
+    if (lnk == 'bg') {
+      $('.nameTag').css('background-color', color);
+    }else if(lnk == 'varType') {
+      $('#cardPreview .varType').css('color', color);
+    }else if(lnk == 'varName') {
+      $('#cardPreview .varName').css('color', color);
+    }else if(lnk == 'str') {
+      $('#cardPreview .name').css('color', color);
+      $('#cardPreview .atsign').css('color', color);
+    }else if(lnk == 'comment') {
+      $('#cardPreview .comment').css('color', color);
+    }else if(lnk == 'txt') {
+      $('#cardPreview').css('color', color);
+      $('#cardPreview .symbol').css('color', color);
+    }
+  }
+
   /* 테마 변경 관련 함수 */
   var changeTheme = function(newTemplate) {
     if (typeof cardColorTemplate[newTemplate] == "object") {
@@ -279,6 +323,9 @@ $(document).ready(function() {
       $('#cardPreview .atsign').css('color', cardColorTemplate[newTemplate].str);
 
       $('#cardPreview .comment').css('color', cardColorTemplate[newTemplate].comment);
+
+      setSpectrum(cardColorTemplate[newTemplate])
+
     }else {
       console.log('잘못된 테마 이름 : ' + $(this).val());
     }
@@ -330,6 +377,25 @@ $(document).ready(function() {
       });
   });
 
+  // 컬러피커 초기화
+  $(".colorPick input").spectrum({
+      preferredFormat: "hex",
+      allowEmpty:true,
+      showInitial: true,
+      color: "#f00",
+      showInput: true,
+      change: function(color) {
+          var c = color.toHexString(); // #ff0000
+//          console.log('C : ' + c + ', lnk = ' + $(this).attr('data-lnk'));
+          changeChoiceColor(c, $(this).attr('data-lnk'));
+      },
+      move: function(color) {
+          var c = color.toHexString(); // #ff0000
+//          console.log('C : ' + c + ', lnk = ' + $(this).attr('data-lnk'));
+          changeChoiceColor(c, $(this).attr('data-lnk'));
+      }
+  });
+
   // 모바일에서 보여지는 결과하면 토글 처리
   $('#resultArea').click(function(){
     $('input.generation').fadeIn('fast');
@@ -354,6 +420,15 @@ $(document).ready(function() {
     var l = $('#selLanguage').val();
     var c = $('#InputCorp').val();
     var p = $('#InputPosition').val();
+
+    var cpBg      = $('input[data-lnk="bg"]').spectrum('get').toHexString();
+    var cpVarType = $('input[data-lnk="varType"]').spectrum('get').toHexString();
+    var cpVarName = $('input[data-lnk="varName"]').spectrum('get').toHexString();
+    var cpStr     = $('input[data-lnk="str"]').spectrum('get').toHexString();
+    var cpCommect = $('input[data-lnk="comment"]').spectrum('get').toHexString();
+    var cpTxt     = $('input[data-lnk="txt"]').spectrum('get').toHexString();
+
+
     // 사이트 링크
     var url = "https://codenametag.github.io/";
     // 파라미터 생성
@@ -361,7 +436,14 @@ $(document).ready(function() {
                 +"&t="+encodeURIComponent(t)
                 +"&l="+encodeURIComponent(l)
                 +"&c="+encodeURIComponent(c)
-                +"&p="+encodeURIComponent(p);
+                +"&p="+encodeURIComponent(p)
+                +"&cpBg="+encodeURIComponent(cpBg)
+                +"&cpVarType="+encodeURIComponent(cpVarType)
+                +"&cpVarName="+encodeURIComponent(cpVarName)
+                +"&cpStr="+encodeURIComponent(cpStr)
+                +"&cpCommect="+encodeURIComponent(cpCommect)
+                +"&cpTxt="+encodeURIComponent(cpTxt);
+
 
     var fullUrl = url + param;
     // 트위터 메시지를 GET 파라미터 형태로 넘겨주므로 인코딩
@@ -389,12 +471,29 @@ $(document).ready(function() {
     var c = getp('c');
     var p = getp('p');
 
+    var pickColor = {
+      "bg"      : getp('cpBg'),
+      "varType" : getp('cpVarType'),
+      "varName" : getp('cpVarName'),
+      "str"     : getp('cpStr'),
+      "comment" : getp('cpCommect'),
+      "txt"     : getp('cpTxt')
+    };
+
+
     // 선택지나 값을 설정해주고 및 수정 이벤트 발생(프리뷰 적용이 이벤트를 캐치하여 동작하므로.)
     $('#InputName').val(n).change();
     $('#selTheme').val(t).change();
     $('#selLanguage').val(l).change();
     $('#InputCorp').val(c).change();
     $('#InputPosition').val(p).change();
+
+    // 컬러피커를 세팅하고 미리보기 색상을 바꾼다.
+    for(var index in pickColor) {
+      $('input[data-lnk="'+index+'"]').spectrum('set', pickColor[index]);
+      changeChoiceColor(pickColor[index], index);
+    }
+    
   }else {
     // GET 파라미터가 존재하지 않으면 기본 세팅으로 진행한다.
     console.log('GET 파라미터가 없으므로 기본 세팅으로 이루어집니다.');

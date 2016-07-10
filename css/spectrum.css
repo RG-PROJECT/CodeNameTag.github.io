@@ -371,7 +371,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     *zoom: 1;
     *display: inline;
     border: solid 1px #91765d;
-    background: #eee;
+    /*background: #eee;*/
     color: #333;
     vertical-align: middle;
 }
@@ -396,7 +396,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     width:25px;
     height: 20px;
     border: solid 1px #222;
-    margin-right: 5px;
+    /*margin-right: 5px;*/
     float:left;
     z-index: 0;
 }

@@ -39,7 +39,7 @@
     </head>
 
     <body>
-      <div calss = "container">
+      <div calss = "container-fluid">
         <div class="nav-bar">
           <nav class="top-header">
             <a href="./index.html" title="nametag" class="nametag">
@@ -78,7 +78,7 @@
           <!-- 레이아웃을 위한 빈 컬럼 -->
           <div class="col-md-2"></div>
           <!-- 입력 영역 -->
-          <div class="col-md-4">
+          <div class="col-md-4 setHeight">
             <div class="custom-area text-center" >
                 <h1>명찰내용</h1>
                 <form id="userInput" class="" action="index.html" method="post">
@@ -123,8 +123,6 @@
                           <input type='text' data-lnk="bg" />
                           <input type='text' data-lnk="varType" />
                           <input type='text' data-lnk="varName" />
-                        </div>
-                        <div>
                           <input type='text' data-lnk="str" />
                           <input type='text' data-lnk="comment" />
                           <input type='text' data-lnk="txt" />
@@ -173,7 +171,7 @@
 
 <div id="resultArea" class="text-center" >
   <div id="resultBackground"></div>
-  <div id="resultImage"></div>
+  <div id="resultImage" style="padding-top: 10px;"></div>
   <div style="margin-top:20px">
     <input class="btn btn-info share" type="button" value="공유">
     <a class="btn btn-success" href="#" role="button" id="downloadBtn" download="NameTag.png">저장</a>
@@ -518,6 +516,9 @@ $(document).ready(function() {
       $('#informationBox').hide();
       showInfo = false;
     }
+  });
+  $('.bubble').click(function(){
+        $('#startInfo').click();
   });
 
   // information 말풍선 토글

@@ -17,13 +17,16 @@
       <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
       <!-- CDN -->
-      <link rel="stylesheet" href="./css/style.css">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+      <link rel="stylesheet" href="./css/style.css">
+      <link rel='stylesheet' href='./css/spectrum.css' />
+
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
       <script src="./js/canvas2image.js"></script>
       <script src="./js/html2canvas.js"></script>
-
+      <script src='./js/spectrum.js'></script>
       <!-- favicon -->
       <link rel="shortcut icon" id="favicon" type="image/png" href="favicon.png">
 
@@ -108,6 +111,18 @@
                           <option value="ironman">ironman</option>
                         </select>
                       </div>
+                      <div class="colorPick">
+                        <div style="margin-bottom:5px;">
+                          <input type='text' data-lnk="bg" />
+                          <input type='text' data-lnk="varType" />
+                          <input type='text' data-lnk="varName" />
+                        </div>
+                        <div>
+                          <input type='text' data-lnk="str" />
+                          <input type='text' data-lnk="comment" />
+                          <input type='text' data-lnk="txt" />
+                        </div>
+                      </div>
                 </div>
             </div>
           </div>
@@ -129,7 +144,6 @@
         </div>
         </div>
       </div>
-
 
       <nav class="navbar navbar-default navbar-fixed-bottom">
         <div class="container">
@@ -260,6 +274,37 @@ $(document).ready(function() {
     changeLanguage(lang);
   });
 
+
+
+  // 테마 선택 변경에 따라 컬러 피커 세팅
+  var setSpectrum = function(tempColor) {
+    $('input[data-lnk="bg"]').spectrum("set", tempColor.bg);
+    $('input[data-lnk="varType"]').spectrum("set", tempColor.varType);
+    $('input[data-lnk="varName"]').spectrum("set", tempColor.varName);
+    $('input[data-lnk="str"]').spectrum("set", tempColor.str);
+    $('input[data-lnk="comment"]').spectrum("set", tempColor.comment);
+    $('input[data-lnk="bg"]').spectrum("set", tempColor.bg);
+    $('input[data-lnk="txt"]').spectrum("set", tempColor.txt);
+  };
+  // 컬러피커 선택 움지임에 맞춰 미리보기에 적용한다.
+  var changeChoiceColor = function(color, lnk) {
+    if (lnk == 'bg') {
+      $('.nameTag').css('background-color', color);
+    }else if(lnk == 'varType') {
+      $('#cardPreview .varType').css('color', color);
+    }else if(lnk == 'varName') {
+      $('#cardPreview .varName').css('color', color);
+    }else if(lnk == 'str') {
+      $('#cardPreview .name').css('color', color);
+      $('#cardPreview .atsign').css('color', color);
+    }else if(lnk == 'comment') {
+      $('#cardPreview .comment').css('color', color);
+    }else if(lnk == 'txt') {
+      $('#cardPreview').css('color', color);
+      $('#cardPreview .symbol').css('color', color);
+    }
+  }
+
   /* 테마 변경 관련 함수 */
   var changeTheme = function(newTemplate) {
     if (typeof cardColorTemplate[newTemplate] == "object") {
@@ -273,6 +318,9 @@ $(document).ready(function() {
       $('#cardPreview .atsign').css('color', cardColorTemplate[newTemplate].str);
 
       $('#cardPreview .comment').css('color', cardColorTemplate[newTemplate].comment);
+
+      setSpectrum(cardColorTemplate[newTemplate])
+
     }else {
       console.log('잘못된 테마 이름 : ' + $(this).val());
     }
@@ -319,6 +367,25 @@ $(document).ready(function() {
 //        width: 306,
 //        height: 510
       });
+  });
+
+  // 컬러피커 초기화
+  $(".colorPick input").spectrum({
+      preferredFormat: "hex",
+      allowEmpty:true,
+      showInitial: true,
+      color: "#f00",
+      showInput: true,
+      change: function(color) {
+          var c = color.toHexString(); // #ff0000
+//          console.log('C : ' + c + ', lnk = ' + $(this).attr('data-lnk'));
+          changeChoiceColor(c, $(this).attr('data-lnk'));
+      },
+      move: function(color) {
+          var c = color.toHexString(); // #ff0000
+//          console.log('C : ' + c + ', lnk = ' + $(this).attr('data-lnk'));
+          changeChoiceColor(c, $(this).attr('data-lnk'));
+      }
   });
 
   // 모바일에서 보여지는 결과하면 토글 처리

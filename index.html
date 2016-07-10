@@ -80,7 +80,7 @@
           <!-- 입력 영역 -->
           <div class="col-md-4 setHeight">
             <div class="custom-area text-center" >
-                <h1>명찰내용</h1>
+                <h1 id="inputAreaTitle">명찰내용</h1>
                 <form id="userInput" class="" action="index.html" method="post">
                 <div class="input">
                     <div class="form-group">
@@ -134,7 +134,7 @@
           <!-- 미리보기 영역 -->
           <div class="col-md-4 bottom-padding">
             <div class="preveiw-area text-center">
-                <h1>미리보기</h1>
+                <h1 id="previewTitle">미리보기</h1>
                 <div class="nameTag" id="nameTag">
         					<div class="preview" id="cardPreview">
         						<span class="varName"><span class="varType"></span> name <span class="symbol">=</span> </span>
@@ -181,7 +181,6 @@
 <div id="startInfo">
   <div id="resultBackground"></div>
 </div>
-
 <script>
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -538,8 +537,52 @@ $(document).ready(function() {
 
 });
 // NAMETAG 설명 언어 설정 토글
-$("#toggleLang").bootstrapSwitch();
 
+var changeLanguagePack = function(isKor) {
+  var languagePack = {
+    "kor": {
+      'inputAreaTitle'  : "명찰내용",
+      'previewTitle'    : "미리보기" ,
+      'InputName'       : "이름",
+      'InputCorp'       : "회사명",
+      'InputPosition'   : "직위",
+      'generation'      : "만들기",
+      'share'           : "공유",
+      'downloadBtn'     : "저장"
+    },
+    "eng": {
+      'inputAreaTitle': "NameTag Info",
+      'previewTitle'    : "Preview",
+      'InputName'       : "Name",
+      'InputCorp'       : "Crop",
+      'InputPosition'   : "Position",
+      'generation'      : "Generation",
+      'share'           : "Share",
+      'downloadBtn'     : "Download"
+    }
+  }
+  var pack;
+  if (isKor) {
+    pack = languagePack.kor;
+  }else {
+    pack = languagePack.eng;
+  }
+  for(var index in pack) {
+    if (index.substring(0,5) == 'Input') {
+      $('#'+index).attr('placeholder', pack[index]);
+    }else if (index == 'generation' || index == 'share') {
+      console.log('asdf');
+      $('input.'+index).val(pack[index]);
+    }else {
+      $('#'+index).text(pack[index]);
+    }
+  }
+}
+$("#toggleLang").bootstrapSwitch();
+$('#toggleLang').on('switchChange.bootstrapSwitch', function(event, state) {
+  changeLanguagePack(state);
+});
+changeLanguagePack(true); // 기본 한국어셋으로.
  // 구글 유니버셜 애널러틱스 코드
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

@@ -43,16 +43,18 @@
             <div style="float: right!important;margin-right:0">
               <div id="informationBox">
                 <div class="bubble">
-                          <dl>
-                            <dt>Input Area</dt>
-                            <dd>이름, 회사, 등을 명찰에 적용할 정보를 입력합니다.</dd>
-                            <dt>Preview Area</dt>
-                            <dd>입력한 값이 적용된 명찰을 미리 확인할 수 있습니다.</dd>
-                            <dt>Generation</dt>
-                            <dd>명찰을 PNG 파일로 생성합니다.</dd>
-                            <dt>Share</dt>
-                            <dd>생성한 명찰을 SNS로 공유할 수 있습니다.</dd>
-                          </dl>
+                    <dl>
+                    </br>
+                      <dt>프로그래밍 언어 스타일의 명찰을 만들어보세요!</dt></br>
+                      <dt>명찰내용</dt>
+                        <dd> 이름, 회사, 등을 명찰에 적용할 정보를 입력합니다.</dd>
+                      </br><dt>미리보기</dt>
+                        <dd> 입력한 값이 적용된 명찰을 미리 확인할 수 있습니다.</dd>
+                      </br><dt>만들기</dt>
+                        <dd> 명찰을 PNG 파일로 생성합니다.</dd>
+                      </br><dt>공유</dt>
+                        <dd> 생성한 명찰을 SNS로 공유할 수 있습니다.</dd>
+                    </dl>
                 </div>
               </div>
               <span class="btn glyphicon glyphicon-info-sign"
@@ -142,7 +144,7 @@
           </div>
 
           <div class="copyright">
-            © 2016
+            © 2016 by
              <a href="https://github.com/CodeNameTag">N8G8</a>
              <a href="https://github.com/CodeNameTag/CodeNameTag.github.io"> | Github</a>
           </div>
@@ -158,6 +160,11 @@
     <a class="btn btn-success" href="#" role="button" id="downloadBtn" download="NameTag.png">Download</a>
     </div>
 </div>
+
+<div id="startInfo">
+  <div id="resultBackground"></div>
+</div>
+
 <script>
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -277,15 +284,18 @@ $(document).ready(function() {
       console.log('잘못된 테마 이름 : ' + $(this).val());
     }
   };
+
   // 테마 변경 선택지에 적용
   $('#selTheme').change(function() {
     newTemplate = $(this).val();
     changeTheme(newTemplate);
   });
 
+
+
   // 이미지 팝업 생성
   $('input.generation').click(function() {
-// Trying new way
+  // Trying new way
       var w = 1000;
       var h = 1000;
       var gencanvas = document.createElement('canvas');
@@ -362,6 +372,7 @@ $(document).ready(function() {
     // 팝업을 띄운다.
     var shareView = window.open(popupUrl, 'Twitter');
   });
+
   if (typeof getUrlParameter('n') != 'undefined') {
     // getp 함수 : 파라미터를 받아오고, 파라미터가 존재하지 않으면 공백, 존재하면 그것의 값을 반환
     // return은 문자형
@@ -393,9 +404,22 @@ $(document).ready(function() {
     changeTheme('default');
   }
 
-  // information 말풍선 토글
+
   var showInfo = false;
+
+  // 백그라운드 인포&배경 off
+  $('#startInfo').click(function(){
+      $(this).fadeOut('fast');
+    if(showInfo){
+      $('#informationBox').hide();
+      showInfo = false;
+    }
+  });
+
+  // information 말풍선 토글
   $('#infoToggle').click(function(e) {
+    $('#startInfo').fadeIn('fast');
+
   	e.stopPropagation();
     if(showInfo) {
       $('#informationBox').hide();
@@ -405,12 +429,8 @@ $(document).ready(function() {
       showInfo = true;
     }
   });
-  $('#informationBox').click(function() {
-    if(showInfo) {
-        $('#informationBox').hide();
-        showInfo = false;
-    }
-  });
+  $('#infoToggle').click();
+
 });
 
  // 구글 유니버셜 애널러틱스 코드
@@ -421,6 +441,7 @@ $(document).ready(function() {
 
   ga('create', 'UA-80202920-1', 'auto');
   ga('send', 'pageview');
+
 
 </script>
 <!-- body 전체 container div-->

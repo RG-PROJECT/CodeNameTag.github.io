@@ -111,19 +111,23 @@ div.nameTag .preview {
   /*display: none;*/
 }
 .bubble  {
+	/*font-size: 13.5px;*/
   right: 0;
   top: 45px;
   z-index: 99;
   position: absolute;
   width: 300px;
-  height: 260px;
+  height: 330px;
   padding: 0px;
   background: #eee;
   -webkit-border-radius: 9px;
   -moz-border-radius: 9px;
   border-radius: 9px;
-  padding: 10px;
+  padding: 18px;
   font-size: 9pt;
+}
+dt, dd {
+    font-size: 1.12em;
 }
 
 .bubble:after  {

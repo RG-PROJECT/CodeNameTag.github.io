@@ -43,15 +43,16 @@
               <!-- 메뉴 바 왼쪽 : 타이틀 로고 -->
               <span id ="title"> NAMETAG </span>
             </a>
-            <div style="float: right!important;margin-right:0">
+            <div style="float: right!important;margin-right:0;">
               <div id="informationBox">
                 <div class="bubble">
                     <dl>
-                      <dt>프로그래밍 언어 스타일의 명찰을 만들어보세요!</dt></br>
+                      <dt style="font-size: 20px;">
+                        프로그래밍 언어 스타일의 명찰을 만들어보세요!</dt></br>
                       <dt>명찰내용</dt>
-                        <dd> 이름, 회사, 등을 명찰에 적용할 정보를 입력합니다.</dd>
+                        <dd>이름, 회사 등 명찰에 적용할 정보를 입력합니다.</dd>
                       </br><dt>미리보기</dt>
-                        <dd> 입력한 값이 적용된 명찰을 미리 확인할 수 있습니다.</dd>
+                        <dd>입력 값이 적용된 명찰을 미리 확인할 수 있습니다.</dd>
                       </br><dt>만들기</dt>
                         <dd> 명찰을 PNG 파일로 생성합니다.</dd>
                       </br><dt>공유</dt>
@@ -74,7 +75,7 @@
           <!-- 입력 영역 -->
           <div class="col-md-4">
             <div class="custom-area text-center" >
-                <h1>Input Area</h1>
+                <h1>명찰내용</h1>
                 <form id="userInput" class="" action="index.html" method="post">
                 <div class="input">
                     <div class="form-group">
@@ -130,7 +131,7 @@
           <!-- 미리보기 영역 -->
           <div class="col-md-4 bottom-padding">
             <div class="preveiw-area text-center">
-                <h1>Preview Area</h1>
+                <h1>미리보기</h1>
                 <div class="nameTag" id="nameTag">
         					<div class="preview" id="cardPreview">
         						<span class="varName"><span class="varType"></span> name <span class="symbol">=</span> </span>
@@ -152,7 +153,7 @@
           <div class="action-btn">
             <input class="btn btn-success generation" type="button"
             onclick="ga('send', 'event', 'generation', 'click', 'image', value);"
-            value="Generation">
+            value="만들기">
               </form>
           </div>
 
@@ -169,8 +170,8 @@
   <div id="resultBackground"></div>
   <div id="resultImage"></div>
   <div style="margin-top:20px">
-    <input class="btn btn-info share" type="button" value="Share">
-    <a class="btn btn-success" href="#" role="button" id="downloadBtn" download="NameTag.png">Download</a>
+    <input class="btn btn-info share" type="button" value="공유">
+    <a class="btn btn-success" href="#" role="button" id="downloadBtn" download="NameTag.png">저장</a>
     </div>
 </div>
 
@@ -493,7 +494,7 @@ $(document).ready(function() {
       $('input[data-lnk="'+index+'"]').spectrum('set', pickColor[index]);
       changeChoiceColor(pickColor[index], index);
     }
-    
+
   }else {
     // GET 파라미터가 존재하지 않으면 기본 세팅으로 진행한다.
     console.log('GET 파라미터가 없으므로 기본 세팅으로 이루어집니다.');

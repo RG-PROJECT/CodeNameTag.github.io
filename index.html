@@ -283,7 +283,6 @@ $(document).ready(function() {
     $('input[data-lnk="varName"]').spectrum("set", tempColor.varName);
     $('input[data-lnk="str"]').spectrum("set", tempColor.str);
     $('input[data-lnk="comment"]').spectrum("set", tempColor.comment);
-    $('input[data-lnk="bg"]').spectrum("set", tempColor.bg);
     $('input[data-lnk="txt"]').spectrum("set", tempColor.txt);
   };
   // 컬러피커 선택 움지임에 맞춰 미리보기에 적용한다.
@@ -412,6 +411,15 @@ $(document).ready(function() {
     var l = $('#selLanguage').val();
     var c = $('#InputCorp').val();
     var p = $('#InputPosition').val();
+
+    var cpBg      = $('input[data-lnk="bg"]').spectrum('get').toHexString();
+    var cpVarType = $('input[data-lnk="varType"]').spectrum('get').toHexString();
+    var cpVarName = $('input[data-lnk="varName"]').spectrum('get').toHexString();
+    var cpStr     = $('input[data-lnk="str"]').spectrum('get').toHexString();
+    var cpCommect = $('input[data-lnk="comment"]').spectrum('get').toHexString();
+    var cpTxt     = $('input[data-lnk="txt"]').spectrum('get').toHexString();
+
+
     // 사이트 링크
     var url = "https://codenametag.github.io/";
     // 파라미터 생성
@@ -419,7 +427,14 @@ $(document).ready(function() {
                 +"&t="+encodeURIComponent(t)
                 +"&l="+encodeURIComponent(l)
                 +"&c="+encodeURIComponent(c)
-                +"&p="+encodeURIComponent(p);
+                +"&p="+encodeURIComponent(p)
+                +"&cpBg="+encodeURIComponent(cpBg)
+                +"&cpVarType="+encodeURIComponent(cpVarType)
+                +"&cpVarName="+encodeURIComponent(cpVarName)
+                +"&cpStr="+encodeURIComponent(cpStr)
+                +"&cpCommect="+encodeURIComponent(cpCommect)
+                +"&cpTxt="+encodeURIComponent(cpTxt);
+
 
     var fullUrl = url + param;
     // 트위터 메시지를 GET 파라미터 형태로 넘겨주므로 인코딩
@@ -446,12 +461,29 @@ $(document).ready(function() {
     var c = getp('c');
     var p = getp('p');
 
+    var pickColor = {
+      "bg"      : getp('cpBg'),
+      "varType" : getp('cpVarType'),
+      "varName" : getp('cpVarName'),
+      "str"     : getp('cpStr'),
+      "comment" : getp('cpCommect'),
+      "txt"     : getp('cpTxt')
+    };
+
+
     // 선택지나 값을 설정해주고 및 수정 이벤트 발생(프리뷰 적용이 이벤트를 캐치하여 동작하므로.)
     $('#InputName').val(n).change();
     $('#selTheme').val(t).change();
     $('#selLanguage').val(l).change();
     $('#InputCorp').val(c).change();
     $('#InputPosition').val(p).change();
+
+    // 컬러피커를 세팅하고 미리보기 색상을 바꾼다.
+    for(var index in pickColor) {
+      $('input[data-lnk="'+index+'"]').spectrum('set', pickColor[index]);
+      changeChoiceColor(pickColor[index], index);
+    }
+    
   }else {
     // GET 파라미터가 존재하지 않으면 기본 세팅으로 진행한다.
     console.log('GET 파라미터가 없으므로 기본 세팅으로 이루어집니다.');

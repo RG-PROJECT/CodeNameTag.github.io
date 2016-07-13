@@ -419,6 +419,7 @@ $(document).ready(function() {
           $('#bottomInformation').fadeOut('fast');
           var imageData = Canvas2Image.saveAsPNG(canvas);
           $('#downloadBtn').attr('href', imageData);
+		  $('html,body').scrollTop(0);
         } // ,
 //        width: 306,
 //        height: 510

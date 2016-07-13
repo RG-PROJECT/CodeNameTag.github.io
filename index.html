@@ -14,7 +14,7 @@
       <link href="//fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
 
       <!-- Bootstrap -->
-      <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <!-- <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
 
       <!-- CDN -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -154,9 +154,7 @@
         <div class="container">
 
           <div class="action-btn">
-            <input class="btn btn-success generation" type="button"
-            onclick="ga('send', 'event', 'generation', 'click', 'image', value);"
-            value="만들기">
+            <input class="btn btn-success generation" type="button" value="만들기">
               </form>
           </div>
 
@@ -388,6 +386,7 @@ $(document).ready(function() {
   // 이미지 팝업 생성
   $('input.generation').click(function() {
   // Trying new way
+  	  ga('send', 'event', 'generation', 'click', 'gen');
       var w = 1100;
       var h = 1100;
       var gencanvas = document.createElement('canvas');
@@ -617,7 +616,7 @@ var changeLanguagePack = function(isKor) {
     if (index.substring(0,5) == 'Input') {
       $('#'+index).attr('placeholder', pack[index]);
     }else if (index == 'generation' || index == 'share') {
-      console.log('asdf');
+      // console.log('asdf');
       $('input.'+index).val(pack[index]);
     }else {
       $('#'+index).text(pack[index]);

@@ -139,7 +139,7 @@
                 <h1 id="previewTitle">미리보기</h1>
                 <div class="nameTag" id="nameTag">
         					<div class="preview" id="cardPreview">
-        						<span class="varName"><span class="varType"></span> name <span class="symbol">=</span> </span>
+        						<span class="varName"><span class="varType"></span> <span class="pointer"></span>name <span class="symbol">=</span> </span>
         						<span class="name">"name"</span><span class="semicolon symbol"></span>
         						<span class="comment"><span class="cstart"></span><span class="position">position</span><span class="cend"></span></span>
         						<span class="company">company</span>
@@ -212,7 +212,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
 };
 var cardLangTemplate = {
   swift : { varType: 'let ', semicolon : false, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false},
-  c     : { varType: 'char[] ', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false },
+  c     : { varType: 'char', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:true, atsign:false },
   cpp   : { varType: 'std::string', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false },
   csharp: { varType: 'string', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false },
   objc   : { varType: 'NSString', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:true, atsign:true },

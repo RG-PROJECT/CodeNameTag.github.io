@@ -122,11 +122,18 @@ div.nameTag .preview {
 }
 .preview .comment {
 	display: block;
+	line-height: 1.6;
+}
+.preview .position {
+	word-break: break-word;
 }
 .preview .company {
 	position: absolute;
 	bottom : 15px;
 	left : 25px;
+	line-height: 1.6;
+    padding-right: 21px;
+    word-break: break-word;
 }
 /* information 말풍선 */
 #informationBox {

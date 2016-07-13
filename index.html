@@ -98,6 +98,7 @@
                           <option value="c">Language</option>
                           <option value="c">C</option>
                           <option value="cpp">C++</option>
+                          <option value="csharp">C#</option>
                           <option value="objc">Objective-C</option>
                           <option value="java">JAVA</option>
                           <option value="javascript">Javascript</option>
@@ -213,6 +214,7 @@ var cardLangTemplate = {
   swift : { varType: 'let ', semicolon : false, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false},
   c     : { varType: 'char[] ', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false },
   cpp   : { varType: 'std::string', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false },
+  csharp: { varType: 'string', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false },
   objc   : { varType: 'NSString', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:true, atsign:true },
   python: { varType: '', semicolon: false, commentStart: '\'\'\'', commentEnd: '\'\'\'', pointer:false, atsign:false },
   javascript: { varType: 'var', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false },

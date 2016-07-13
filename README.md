@@ -16,6 +16,7 @@ Make your custom name tag with code!
 ### 선택가능 언어
 - C
 - C++
+- C#
 - Objective-C
 - JAVA
 - Javascript
@@ -32,6 +33,8 @@ Make your custom name tag with code!
 - mono
 - eclipse
 - Ironman
+
+색상 파렛트를 통해 자유롭게 커스텀이 가능합니다.
 
 계속 추가됩니다!
 

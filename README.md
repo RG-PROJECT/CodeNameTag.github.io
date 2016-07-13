@@ -7,8 +7,11 @@ Make your custom name tag with code!
 
  결과를 이미지 파일로 저장하거나 Twitter로 공유할 수 있습니다.
 
+### 이미지
+![Smaller icon](https://codenametag.github.io/sample.png)
+
 ### 데모
-[link](http://CodeNameTag.github.io)
+[Link](http://CodeNameTag.github.io)
 
 ### 선택가능 언어
 - C
@@ -17,7 +20,9 @@ Make your custom name tag with code!
 - JAVA
 - Javascript
 - Python
+- Ruby
 - Swift
+
 
 ### 선택가능 테마
 - synhi
@@ -26,6 +31,7 @@ Make your custom name tag with code!
 - dark
 - mono
 - eclipse
+- Ironman
 
 계속 추가됩니다!
 

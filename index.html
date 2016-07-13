@@ -84,13 +84,13 @@
                 <form id="userInput" class="" action="index.html" method="post">
                 <div class="input">
                     <div class="form-group">
-                      <input type="text" class="form-control" id="InputName" placeholder ="name">
+                      <input type="text" class="form-control" id="InputName" placeholder="name" maxlength="30">
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="InputCorp" placeholder ="corp">
+                      <input type="text" class="form-control" id="InputCorp" placeholder="corp">
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="InputPosition" placeholder ="position">
+                      <input type="text" class="form-control" id="InputPosition" placeholder="position">
                     </div>
 
                       <div class="language">
@@ -150,7 +150,7 @@
         </div>
       </div>
 
-      <nav class="navbar navbar-default navbar-fixed-bottom">
+      <nav class="navbar navbar-default navbar-fixed-bottom" id="bottomInformation" style="z-index:0">
         <div class="container">
 
           <div class="action-btn">
@@ -182,6 +182,20 @@
   <div id="resultBackground"></div>
 </div>
 <script>
+String.prototype.byteLength = function() {
+    var l= 0;
+     
+    for(var idx=0; idx < this.length; idx++) {
+        var c = escape(this.charAt(idx));
+         
+        if( c.length==1 ) l ++;
+        else if( c.indexOf("%u")!=-1 ) l += 2;
+        else if( c.indexOf("%")!=-1 ) l += c.length/3;
+    }
+     
+    return l;
+};
+
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
@@ -226,12 +240,35 @@ $(document).ready(function() {
   // 이름
   $('#InputName').on("change paste keyup", function() {
     //console.log($(this).val());
-    $('#cardPreview .name').text('"' + $(this).val() + '"');
+    if ($('#selLanguage').val() == 'python') {
+    	var firstLineLength = 14;
+    	if ($(this).val().byteLength() > 14) {
+    		// 파이썬 묶음 변환 ''' 문장 '''
+    		$('#cardPreview .name').text('"""' + $(this).val() + '"""');
+    	}else {
+    		// " "
+    		$('#cardPreview .name').text('"' + $(this).val() + '"');
+    	}
+
+    }else {
+		$('#cardPreview .name').text('"' + $(this).val() + '"');
+    }
+
   });
   // 직급
   $('#InputPosition').on("change paste keyup", function() {
-    //console.log($(this).val());
-    $('#cardPreview .position').text($(this).val());
+	$('#cardPreview .position').text($(this).val());
+	// console.log('length : ' + $(this).val().byteLength() );
+    if ($('#selLanguage').val() == 'python') {
+    	if ($(this).val().byteLength() > 22) {
+			$('#cardPreview .comment .cstart').html("'''<br>");
+    		$('#cardPreview .comment .cend').html("<br>'''");
+    	}else {
+    		$('#cardPreview .comment .cstart').text('# ');
+    		$('#cardPreview .comment .cend').text('');
+    	}
+    	
+    }
   });
   // 회사
   $('#InputCorp').on("change paste keyup", function() {
@@ -272,15 +309,21 @@ $(document).ready(function() {
       // 파이썬일 경우, varName에 display:block 속성 빼기
       if (lang == 'python') {
         $('#cardPreview .varName').css('display', 'inline');
+
       }else {
         $('#cardPreview .varName').css('display', 'block');
+
       }
+
     }
   };
   // 언어 선택 선택지에 적용
   $('#selLanguage').change(function() {
     var lang = $(this).val();
     changeLanguage(lang);
+    $('#InputName').change();
+    $('#InputCorp').change();
+    $('#InputPosition').change();
   });
 
 
@@ -372,6 +415,7 @@ $(document).ready(function() {
           $('#resultImage').append(canvas);
           $('#resultArea').fadeIn('fast');
           $('input.generation').fadeOut('fast');
+          $('#bottomInformation').fadeOut('fast');
           var imageData = Canvas2Image.saveAsPNG(canvas);
           $('#downloadBtn').attr('href', imageData);
         } // ,
@@ -403,6 +447,7 @@ $(document).ready(function() {
   $('#resultArea').click(function(){
     $('input.generation').fadeIn('fast');
     $(this).fadeOut('fast');
+    $('#bottomInformation').fadeIn('fast');
   });
   $('#resultArea #downloadBtn').click(function(e) {
     e.stopPropagation();
@@ -485,9 +530,9 @@ $(document).ready(function() {
 
 
     // 선택지나 값을 설정해주고 및 수정 이벤트 발생(프리뷰 적용이 이벤트를 캐치하여 동작하므로.)
+    $('#selLanguage').val(l).change();
     $('#InputName').val(n).change();
     $('#selTheme').val(t).change();
-    $('#selLanguage').val(l).change();
     $('#InputCorp').val(c).change();
     $('#InputPosition').val(p).change();
 
@@ -511,6 +556,7 @@ $(document).ready(function() {
   // 백그라운드 인포&배경 off
   $('#startInfo').click(function(){
       $(this).fadeOut('fast');
+      $('#bottomInformation').fadeIn('fast');
     if(showInfo){
       $('#informationBox').hide();
       showInfo = false;
@@ -523,7 +569,7 @@ $(document).ready(function() {
   // information 말풍선 토글
   $('#infoToggle').click(function(e) {
     $('#startInfo').fadeIn('fast');
-
+    // $('#bottomInformation').fadeOut('fast');
   	e.stopPropagation();
     if(showInfo) {
       $('#informationBox').hide();

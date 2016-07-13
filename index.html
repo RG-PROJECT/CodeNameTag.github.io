@@ -103,6 +103,7 @@
                           <option value="javascript">Javascript</option>
                           <option value="python">Python</option>
                           <option value="swift">Swift</option>
+                          <option value="ruby">Ruby</option>
                         </select>
                       </div>
                       <div class="theme">
@@ -215,7 +216,8 @@ var cardLangTemplate = {
   objc   : { varType: 'NSString', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:true, atsign:true },
   python: { varType: '', semicolon: false, commentStart: '\'\'\'', commentEnd: '\'\'\'', pointer:false, atsign:false },
   javascript: { varType: 'var', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false },
-  java  : { varType: 'String', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false }
+  java  : { varType: 'String', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false },
+  ruby : { varType: '', semicolon: false, commentStart: '#', commentEnd: '', pointer:false, atsign:false }
 };
 var cardColorTemplate = {
   default : { bg: '#fff', varType :'#3a95ae', varName : '#000', str : '#b22821', comment : '#008d14', txt:'#000'},
@@ -305,7 +307,7 @@ $(document).ready(function() {
       }
 
       // 파이썬일 경우, varName에 display:block 속성 빼기
-      if (lang == 'python') {
+      if (lang == 'python' || lang == 'ruby') {
         $('#cardPreview .varName').css('display', 'inline');
 
       }else {
@@ -606,11 +608,41 @@ var changeLanguagePack = function(isKor) {
       'downloadBtn'     : "Download"
     }
   }
+  var infoBubble = {
+  	"kor": '<dl>\
+              <dt style="font-size: 20px;">\
+                프로그래밍 언어 스타일의 명찰을 만들어보세요!</dt></br>\
+              <dt>명찰내용</dt>\
+                <dd>이름, 회사 등 명찰에 적용할 정보를 입력합니다.</dd>\
+              </br><dt>미리보기</dt>\
+                <dd>입력 값이 적용된 명찰을 미리 확인할 수 있습니다.</dd>\
+              </br><dt>만들기</dt>\
+                <dd> 명찰을 PNG 파일로 생성합니다.</dd>\
+              </br><dt>공유</dt>\
+                <dd> 생성한 명찰을 SNS로 공유할 수 있습니다.</dd>\
+            </dl>',
+  	"eng": '<dl>\
+              <dt style="font-size: 20px;">\
+                Make your custom name tag with code!</dt></br>\
+              <dt>NameTag Info</dt>\
+                <dd> Type your name and company to name tag.</dd>\
+              </br><dt>Preview</dt>\
+                <dd> You can see the name tag\'s input value has been applied.</dd>\
+              </br><dt>Generation</dt>\
+                <dd> Generate your name tag with PNG file.</dd>\
+              </br><dt>Share</dt>\
+                <dd> You can share your name tag on Twitter.</dd>\
+            </dl>'
+  };
+
   var pack;
+  var $iBubble = $('#informationBox .bubble');
   if (isKor) {
     pack = languagePack.kor;
+    $iBubble.html(infoBubble.kor);
   }else {
     pack = languagePack.eng;
+    $iBubble.html(infoBubble.eng);
   }
   for(var index in pack) {
     if (index.substring(0,5) == 'Input') {

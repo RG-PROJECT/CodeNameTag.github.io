@@ -102,6 +102,7 @@
                           <option value="java">JAVA</option>
                           <option value="javascript">Javascript</option>
                           <option value="python">Python</option>
+                          <option value="Ruby">Python</option>
                           <option value="swift">Swift</option>
                         </select>
                       </div>
@@ -182,15 +183,15 @@
 <script>
 String.prototype.byteLength = function() {
     var l= 0;
-     
+
     for(var idx=0; idx < this.length; idx++) {
         var c = escape(this.charAt(idx));
-         
+
         if( c.length==1 ) l ++;
         else if( c.indexOf("%u")!=-1 ) l += 2;
         else if( c.indexOf("%")!=-1 ) l += c.length/3;
     }
-     
+
     return l;
 };
 
@@ -265,7 +266,7 @@ $(document).ready(function() {
     		$('#cardPreview .comment .cstart').text('# ');
     		$('#cardPreview .comment .cend').text('');
     	}
-    	
+
     }
   });
   // 회사

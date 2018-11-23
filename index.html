@@ -140,7 +140,7 @@
                 <div class="nameTag" id="nameTag">
         					<div class="preview" id="cardPreview">
         						<span class="varName"><span class="varType"></span> <span class="pointer"></span>name <span class="symbol">=</span> </span>
-        						<span class="name">"name"</span><span class="semicolon symbol"></span>
+        						<span class="atsign"></span><span class="name">"name"</span><span class="semicolon symbol"></span>
         						<span class="comment"><span class="cstart"></span><span class="position">position</span><span class="cend"></span></span>
         						<span class="company">company</span>
         					</div>
@@ -219,7 +219,8 @@ var cardLangTemplate = {
   python: { varType: '', semicolon: false, commentStart: '\'\'\'', commentEnd: '\'\'\'', pointer:false, atsign:false },
   javascript: { varType: 'var', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false },
   java  : { varType: 'String', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false },
-  ruby : { varType: '', semicolon: false, commentStart: '#', commentEnd: '', pointer:false, atsign:false }
+  ruby : { varType: '', semicolon: false, commentStart: '#', commentEnd: '', pointer:false, atsign:false },
+  erlang : { varType: '', semicolon: false, commentStart: '%', commentEnd: '', pointer:false, atsign:false }
 };
 var cardColorTemplate = {
   default : { bg: '#fff', varType :'#3a95ae', varName : '#000', str : '#b22821', comment : '#008d14', txt:'#000'},
@@ -301,6 +302,7 @@ $(document).ready(function() {
       }else {
         $('#cardPreview .pointer').text('');
       }
+
       // @ 기호
       if (cardLangTemplate[lang].atsign) {
         $('#cardPreview .atsign').text('@');

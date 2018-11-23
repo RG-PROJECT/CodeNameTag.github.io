@@ -138,12 +138,15 @@
             <div class="preveiw-area text-center">
                 <h1 id="previewTitle">미리보기</h1>
                 <div class="nameTag" id="nameTag">
+                  <canvas id="cardPreview" width="306" height="510"></canvas>
+                  <!--
         					<div class="preview" id="cardPreview">
         						<span class="varName"><span class="varType"></span> <span class="pointer"></span>name <span class="symbol">=</span> </span>
         						<span class="atsign"></span><span class="name">"name"</span><span class="semicolon symbol"></span>
         						<span class="comment"><span class="cstart"></span><span class="position">position</span><span class="cend"></span></span>
         						<span class="company">company</span>
-        					</div>
+                  </div>
+                  -->
                 </div>
             </div>
           </div>
@@ -196,7 +199,7 @@ String.prototype.byteLength = function() {
     return l;
 };
 
-var getUrlParameter = function getUrlParameter(sParam) {
+const getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
         sParameterName,
@@ -210,7 +213,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
         }
     }
 };
-var cardLangTemplate = {
+const cardLangTemplate = {
   swift : { varType: 'let ', semicolon : false, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false},
   c     : { varType: 'char', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:true, atsign:false },
   cpp   : { varType: 'std::string', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false },
@@ -222,7 +225,7 @@ var cardLangTemplate = {
   ruby : { varType: '', semicolon: false, commentStart: '#', commentEnd: '', pointer:false, atsign:false },
   erlang : { varType: '', semicolon: false, commentStart: '%', commentEnd: '', pointer:false, atsign:false }
 };
-var cardColorTemplate = {
+const cardColorTemplate = {
   default : { bg: '#fff', varType :'#3a95ae', varName : '#000', str : '#b22821', comment : '#008d14', txt:'#000'},
   synhi  : { bg: '#fff', varType :'#007020', varName : '#bb60d5', str : '#4070a0', comment : '#60a0b0', txt:'#000'},
   sunset  : { bg: '#fffceb', varType :'#375788', varName : '#000', str : '#e63b3f', comment : '#d08631', txt:'#000'},
@@ -233,18 +236,128 @@ var cardColorTemplate = {
   ironman : { bg: '#771414', varType :'#ede8e5', varName : '#beba46', str : '#ebdf8c', comment : '#8bd3fb', txt:'#ede8e5' }
 };
 
-$(document).ready(function() {
+// const canvas = document.getElementById("cardPreview");
+// const context = canvas.getContext("2d");
+
+/*
+  width: 100%; height: 100%;
+	padding: 80px 10px 10px 10px; box-sizing: border-box;
+	position: relative;
+	line-height:2.5;
+	text-align: initial;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size:20pt;
+*/
+const FONT_NOTO_SANS_KR = "'Noto Sans KR', sans-serif";
+
+const NameTagPreview = class {
+  constructor(canvas) {
+    this.dpr = window.devicePixelRatio || 1;
+    this.canvas = canvas;
+
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * this.dpr;
+    canvas.height = rect.height * this.dpr;
+
+    this.ctx = canvas.getContext("2d");
+    this.ctx.font = (20*this.dpr) + 'pt ' + FONT_NOTO_SANS_KR;
+    this.ctx.textAlign = 'left';
+    this.ctx.textBaseline = 'top';
+    // this.ctx.textBaseline = 'alphabetic';
+    
+    this.langTemplate = cardLangTemplate.c;
+    this.name = 'test';
+    this.colorTemplate = cardColorTemplate.default;
+  }
+
+  _fillBackground(color) {
+    this.ctx.fillStyle = color;
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+
+  /*
+    return : height
+  */
+  _printName() {
+    const startX = 20;
+    const lineHeight = (20*this.dpr) * 2.8;
+    let x = startX;
+    let y = 80;
+
+
+    // 변수 타입
+    if (this.langTemplate.varType.length > 0) {
+      let varType = this.langTemplate.varType + ' ';
+      this.ctx.fillStyle = this.colorTemplate.varType;
+      this.ctx.fillText(varType, x, y);
+      x += this.ctx.measureText(varType).width;
+    }
+
+    let varName = 'name = ';
+    // 포인터 처리
+    if (this.langTemplate.pointer)
+      varName = '*' + varName;
+    
+    this.ctx.fillStyle = this.colorTemplate.varName;
+    this.ctx.fillText(varName, x, y);
+
+    let nameString = this.name;
+    // 이름이 가로 길이를 초과할 경우, 멀티라인으로 바꿔준다.
+
+    if (this.ctx.measureText(nameString+'""').width > this.canvas.width) {
+      nameString = nameString.match(/.{1,13}/g);
+      // TODO: 멀티라인 \ 처리
+      if (this.langTemplate === cardLangTemplate.python) {
+        nameString[0] = '"""' + nameString[0];
+        nameString[nameString.length - 1] = nameString[nameString.length - 1] + '"""';
+      }else {
+        nameString[0] = '"' + nameString[0];
+        nameString[nameString.length - 1] = nameString[nameString.length - 1] + '"';
+      }
+    }else {
+      nameString = ['"' + nameString + '"'];
+    }
+
+    if (this.langTemplate.atsign)
+      nameString[0] = '@' + nameString[0];
+
+    y += lineHeight;
+    this.ctx.fillStyle = this.colorTemplate.str;
+
+    for (let i = 0; i < nameString.length; i++) {
+      this.ctx.fillText(nameString[i], startX, y);
+      y += lineHeight;
+    }
+
+    return y;
+  }
+
+  updatePreview() {
+    this._fillBackground(this.colorTemplate.bg);
+    // this._drawText('HelloWorld', 10, 10, '#ff0000');
+    this._printName();
+  }
+};
+
+const canvas = document.getElementById("cardPreview");
+let preview = new NameTagPreview(canvas);
+
+$(function() {
   var isMobile = function() {
     try{ document.createEvent("TouchEvent"); return true; }
     catch(e){ return false; }
   }
-  // 입력 폼에 값이 변하면 프리뷰에 적용되도록 설정
 
+  // 입력 폼에 값이 변하면 프리뷰에 적용되도록 설정
   // 이름
   $('#InputName').on("change paste keyup", function() {
     //console.log($(this).val());
+    // $('#cardPreview .name')
+    preview.name = $(this).val();
+    preview.updatePreview();
+    /*
     if ($('#selLanguage').val() == 'python') {
-    	var firstLineLength = 14;
+    	const firstLineLength = 14;
     	if ($(this).val().byteLength() > 14) {
     		// 파이썬 묶음 변환 ''' 문장 '''
     		$('#cardPreview .name').text('"""' + $(this).val() + '"""');
@@ -252,26 +365,25 @@ $(document).ready(function() {
     		// " "
     		$('#cardPreview .name').text('"' + $(this).val() + '"');
     	}
-
     }else {
-		$('#cardPreview .name').text('"' + $(this).val() + '"');
+		  $('#cardPreview .name').text('"' + $(this).val() + '"');
     }
-
+    */
   });
   // 직급
   $('#InputPosition').on("change paste keyup", function() {
-	$('#cardPreview .position').text($(this).val());
-	// console.log('length : ' + $(this).val().byteLength() );
-    if ($('#selLanguage').val() == 'python') {
-    	if ($(this).val().byteLength() > 22) {
-			$('#cardPreview .comment .cstart').html("'''<br>");
-    		$('#cardPreview .comment .cend').html("<br>'''");
-    	}else {
-    		$('#cardPreview .comment .cstart').text('# ');
-    		$('#cardPreview .comment .cend').text('');
-    	}
-    	
-    }
+    $('#cardPreview .position').text($(this).val());
+    // console.log('length : ' + $(this).val().byteLength() );
+      if ($('#selLanguage').val() == 'python') {
+        if ($(this).val().byteLength() > 22) {
+        $('#cardPreview .comment .cstart').html("'''<br>");
+          $('#cardPreview .comment .cend').html("<br>'''");
+        }else {
+          $('#cardPreview .comment .cstart').text('# ');
+          $('#cardPreview .comment .cend').text('');
+        }
+        
+      }
   });
   // 회사
   $('#InputCorp').on("change paste keyup", function() {
@@ -324,10 +436,12 @@ $(document).ready(function() {
   // 언어 선택 선택지에 적용
   $('#selLanguage').change(function() {
     var lang = $(this).val();
-    changeLanguage(lang);
-    $('#InputName').change();
-    $('#InputCorp').change();
-    $('#InputPosition').change();
+    preview.langTemplate = cardLangTemplate[lang];
+    preview.updatePreview();
+    // changeLanguage(lang);
+    // $('#InputName').change();
+    // $('#InputCorp').change();
+    // $('#InputPosition').change();
   });
 
 
@@ -344,7 +458,7 @@ $(document).ready(function() {
   // 컬러피커 선택 움지임에 맞춰 미리보기에 적용한다.
   var changeChoiceColor = function(color, lnk) {
     if (lnk == 'bg') {
-      $('.nameTag').css('background-color', color);
+      // $('.nameTag').css('background-color', color);
     }else if(lnk == 'varType') {
       $('#cardPreview .varType').css('color', color);
     }else if(lnk == 'varName') {
@@ -363,7 +477,7 @@ $(document).ready(function() {
   /* 테마 변경 관련 함수 */
   var changeTheme = function(newTemplate) {
     if (typeof cardColorTemplate[newTemplate] == "object") {
-      $('.nameTag').css('background-color', cardColorTemplate[newTemplate].bg);
+      // $('.nameTag').css('background-color', cardColorTemplate[newTemplate].bg);
       $('#cardPreview').css('color', cardColorTemplate[newTemplate].txt);
       $('#cardPreview .symbol').css('color', cardColorTemplate[newTemplate].txt);
       $('#cardPreview .varType').css('color', cardColorTemplate[newTemplate].varType);
@@ -384,7 +498,10 @@ $(document).ready(function() {
   // 테마 변경 선택지에 적용
   $('#selTheme').change(function() {
     newTemplate = $(this).val();
-    changeTheme(newTemplate);
+    preview.colorTemplate = cardColorTemplate[newTemplate];
+    preview.updatePreview();
+    // newTemplate = $(this).val();
+    // changeTheme(newTemplate);
   });
 
 

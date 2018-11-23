@@ -89,17 +89,27 @@ a.nametag:hover { color: #fff; text-decoration: none; }
 
 /* 미리보기 처리 관련 스타일 */
 div.nameTag {
+	background: none;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+div.nameTag canvas {
 	width: 306px;
 	height: 510px;
 	border-radius: 10px;
 	border: 1px;
 	border-style: dashed;
 	border-color: #888;
-
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
 }
+
+
+
+
 .preview span{
 	word-break : break-all;
 }

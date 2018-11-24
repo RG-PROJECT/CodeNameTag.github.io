@@ -9,23 +9,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, user-scalable=no">
 
-  <!-- Font -->
+  <!-- CSS -->
   <link href="//fonts.googleapis.com/earlyaccess/notosansgothic.css" rel="stylesheet">
   <link href="//fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
-
-  <!-- CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/style.css">
   <link rel='stylesheet' href='./css/spectrum.css' />
   <link rel='stylesheet' href='./css/bootstrap-switch.min.css' />
 
-
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-  <script src="./js/canvas2image.js"></script>
-  <script src="./js/html2canvas.js"></script>
   <script src='./js/spectrum.js'></script>
   <script src='./js/bootstrap-switch.min.js'></script>
 
@@ -137,7 +132,7 @@
   <div id="resultImage" style="padding-top: 10px;"></div>
   <div style="margin-top:20px">
     <input class="btn btn-info share" type="button" value="공유">
-    <a class="btn btn-success" href="#" role="button" id="downloadBtn" download="NameTag.png">저장</a>
+    <a class="btn btn-success" href="#" role="button" id="btnDownload" download="NameTag.png">저장</a>
     </div>
 </div>
 
@@ -383,22 +378,9 @@ $(document).ready(function() {
     $('input[data-lnk="txt"]').spectrum("set", tempColor.txt);
   };
   // 컬러피커 선택 움지임에 맞춰 미리보기에 적용한다.
-  var changeChoiceColor = function(color, lnk) {
-    if (lnk == 'bg') {
-      // $('.nameTag').css('background-color', color);
-    }else if(lnk == 'varType') {
-      $('#cardPreview .varType').css('color', color);
-    }else if(lnk == 'varName') {
-      $('#cardPreview .varName').css('color', color);
-    }else if(lnk == 'str') {
-      $('#cardPreview .name').css('color', color);
-      $('#cardPreview .atsign').css('color', color);
-    }else if(lnk == 'comment') {
-      $('#cardPreview .comment').css('color', color);
-    }else if(lnk == 'txt') {
-      $('#cardPreview').css('color', color);
-      $('#cardPreview .symbol').css('color', color);
-    }
+  const changeChoiceColor = function(color, lnk) {
+    preview.colorTemplate[lnk] = color;
+    preview.updatePreview();
   }
 
   // 테마 변경 선택지에 적용
@@ -410,61 +392,28 @@ $(document).ready(function() {
     updateSpectrum(cardColorTemplate[newTemplate])
   });
 
-
-
   // 이미지 팝업 생성
   $('#generation').click(function() {
     // Trying new way
     ga('send', 'event', 'generation', 'click', 'gen');
     
+    const canvas = document.createElement('canvas');
+    canvas.width = preview.canvas.width;
+    canvas.height = preview.canvas.height;
+
+    $(canvas).css( { width: $(preview.canvas).css('width'), height: $(preview.canvas).css('height')});
+
+    const context = canvas.getContext('2d');
+    context.drawImage(preview.canvas, 0, 0);
+    const imageData = canvas.toDataURL();
+
     $('#resultImage').html('');
-    // $('#resultImage').append(canvas);
+    $('#resultImage').append(canvas);
     $('#resultArea').fadeIn('fast');
     $('#generation').fadeOut('fast');
     $('#bottomInformation').fadeOut('fast');
-    // var imageData = Canvas2Image.saveAsPNG(canvas);
-    // $('#downloadBtn').attr('href', imageData);
+    $('#btnDownload').attr('href', imageData);
     $('html,body').scrollTop(0);
-
-    /*
-  // Trying new way
-  	  ga('send', 'event', 'generation', 'click', 'gen');
-      var w = 2200;
-      var h = 2200;
-      var gencanvas = document.createElement('canvas');
-      gencanvas.width = w * 2;
-      gencanvas.height = h * 2;
-      gencanvas.style.width = w + 'px';
-      gencanvas.style.height = h + 'px';
-      var context = gencanvas.getContext('2d');
-      context.scale(2, 2);
-      html2canvas(document.getElementById("nameTag"), {
-        canvas: gencanvas,
-        onrendered: function(canvas) {
-          var offset = $("div.nameTag").offset();
-          var context = canvas.getContext('2d');
-          var imageData = context.getImageData(offset.left*2, offset.top*2, context.canvas.width, context.canvas.height);
-          context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-          canvas.width = 306*2;
-          canvas.height= 510*2;
-          canvas.style.width = 306 + 'px';
-          canvas.style.height = 510 + 'px';
-          context.putImageData(imageData, 0, 0);
-          // document.body.appendChild(canvas);
-          // $('#resultImage').html('<img src="'+imageData+'" class="center-block">');
-          $('#resultImage').html('');
-          $('#resultImage').append(canvas);
-          $('#resultArea').fadeIn('fast');
-          $('input.generation').fadeOut('fast');
-          $('#bottomInformation').fadeOut('fast');
-          var imageData = Canvas2Image.saveAsPNG(canvas);
-          $('#downloadBtn').attr('href', imageData);
-		  $('html,body').scrollTop(0);
-        } // ,
-//        width: 306,
-//        height: 510
-      });
-      */
   });
 
   // 컬러피커 초기화
@@ -475,13 +424,11 @@ $(document).ready(function() {
       color: "#f00",
       showInput: true,
       change: function(color) {
-          var c = color.toHexString(); // #ff0000
-//          console.log('C : ' + c + ', lnk = ' + $(this).attr('data-lnk'));
+          var c = color.toHexString(); // 헥사 컬러 스트링
           changeChoiceColor(c, $(this).attr('data-lnk'));
       },
       move: function(color) {
-          var c = color.toHexString(); // #ff0000
-//          console.log('C : ' + c + ', lnk = ' + $(this).attr('data-lnk'));
+          var c = color.toHexString(); // 헥사 컬러 스트링
           changeChoiceColor(c, $(this).attr('data-lnk'));
       }
   });
@@ -492,9 +439,10 @@ $(document).ready(function() {
     $(this).fadeOut('fast');
     $('#bottomInformation').fadeIn('fast');
   });
-  $('#resultArea #downloadBtn').click(function(e) {
+  $('#resultArea #btnDownload').click(function(e) {
     e.stopPropagation();
   });
+
   // GET 파라미터
   // n : 이름
   // t : 테마
@@ -546,23 +494,23 @@ $(document).ready(function() {
   });
 
   if (typeof getUrlParameter('n') != 'undefined') {
-    // getp 함수 : 파라미터를 받아오고, 파라미터가 존재하지 않으면 공백, 존재하면 그것의 값을 반환
-    // return은 문자형
-    var getp = function(n) {
-      var p = getUrlParameter(n);
+    
+    // 파라미터를 받아오고, 파라미터가 존재하지 않으면 공백, 존재하면 해당 파라미터의 값을 리턴
+    const getp = function(n) {
+      let p = getUrlParameter(n);
       if (typeof p == 'undefined')
         return '';
       else
         return p;
     };
     // 각 파라미터의 값을 가져온다.
-    var n = getp('n');
-    var t = getp('t');
-    var l = getp('l');
-    var c = getp('c');
-    var p = getp('p');
+    const n = getp('n');
+    const t = getp('t');
+    const l = getp('l');
+    const c = getp('c');
+    const p = getp('p');
 
-    var pickColor = {
+    const pickColor = {
       "bg"      : getp('cpBg'),
       "varType" : getp('cpVarType'),
       "varName" : getp('cpVarName'),
@@ -570,7 +518,6 @@ $(document).ready(function() {
       "comment" : getp('cpCommect'),
       "txt"     : getp('cpTxt')
     };
-
 
     // 선택지나 값을 설정해주고 및 수정 이벤트 발생(프리뷰 적용이 이벤트를 캐치하여 동작하므로.)
     $('#selLanguage').val(l).change();
@@ -591,8 +538,7 @@ $(document).ready(function() {
     $('#selTheme').change();
   }
 
-
-  var showInfo = false;
+  let showInfo = false;
 
   // 백그라운드 인포&배경 off
   $('#startInfo').click(function(){
@@ -635,7 +581,7 @@ var changeLanguagePack = function(isKor) {
       'InputPosition'   : "직위",
       'generation'      : "만들기",
       'share'           : "공유",
-      'downloadBtn'     : "저장"
+      'btnDownload'     : "저장"
     },
     "eng": {
       'inputAreaTitle': "NameTag Info",
@@ -645,7 +591,7 @@ var changeLanguagePack = function(isKor) {
       'InputPosition'   : "Position",
       'generation'      : "Generation",
       'share'           : "Share",
-      'downloadBtn'     : "Download"
+      'btnDownload'     : "Download"
     }
   }
   var infoBubble = {
@@ -688,7 +634,6 @@ var changeLanguagePack = function(isKor) {
     if (index.substring(0,5) == 'Input') {
       $('#'+index).attr('placeholder', pack[index]);
     }else if (index == 'share') {
-      // console.log('asdf');
       $('input.'+index).val(pack[index]);
     }else {
       $('#'+index).text(pack[index]);
@@ -708,9 +653,6 @@ changeLanguagePack(true); // 기본 한국어셋으로.
 
   ga('create', 'UA-80202920-1', 'auto');
   ga('send', 'pageview');
-
-
 </script>
-    </body>
-
+</body>
 </html>

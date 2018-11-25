@@ -1,190 +1,165 @@
 <!DOCTYPE html>
 <html lang="ko">
-    <head>
-      <title>CodeNameTag</title>
-      <meta name="description" content="프로그래밍 언어 스타일의 명찰을 만들어보세요!">
-      <meta keywords="nametag, programmer, programming language, IT">
-      <meta author="N8G8">
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, user-scalable=no">
+<head>
+  <title>CodeNameTag</title>
+  <meta name="description" content="프로그래밍 언어 스타일의 명찰을 만들어보세요!">
+  <meta keywords="nametag, programmer, programming language, IT">
+  <meta author="N8G8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, user-scalable=no">
 
-      <!-- Font -->
-      <link href="//fonts.googleapis.com/earlyaccess/notosansgothic.css" rel="stylesheet">
-      <link href="//fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+  <!-- CSS -->
+  <link href="//fonts.googleapis.com/earlyaccess/notosansgothic.css" rel="stylesheet">
+  <link href="//fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel='stylesheet' href='./css/spectrum.css' />
+  <link rel='stylesheet' href='./css/bootstrap-switch.min.css' />
 
-      <!-- Bootstrap -->
-      <!-- <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-      <!-- CDN -->
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <script src='./js/spectrum.js'></script>
+  <script src='./js/bootstrap-switch.min.js'></script>
 
-      <link rel="stylesheet" href="./css/style.css">
-      <link rel='stylesheet' href='./css/spectrum.css' />
-      <link rel='stylesheet' href='./css/bootstrap-switch.min.css' />
+  <!-- favicon -->
+  <link rel="shortcut icon" id="favicon" type="image/png" href="favicon.png">
 
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-      <script src="./js/canvas2image.js"></script>
-      <script src="./js/html2canvas.js"></script>
-      <script src='./js/spectrum.js'></script>
-      <script src='./js/bootstrap-switch.min.js'></script>
+  <!-- 스타일 적용 테스트 -->
+  <style type="text/css">
+  </style>
+</head>
+<body>
+<header>
+  <nav class="navbar navbar-dark bg-dark">
+      <a href="./index.html" class="navbar-brand">NAMETAG</a>
+      <div class="">
+          <i class="fas fa-info-circle" id="infoToggle" style="color:#fff;font-size:16pt;padding:0;position: relative;top: 2px; cursor: pointer;margin-right:10px;"></i>
+          <input id="toggleLang" type="checkbox" checked="" data-size="mini" data-off-color="primary" data-on-text="KOR" data-off-text="ENG">
+      </div>
+      <div style="position: absolute;right: 101px;top: 14px;">
+        <div id="informationBox">
+          <div class="bubble">
+              <dl>
+                <dt style="font-size: 20px;">
+                  프로그래밍 언어 스타일의 명찰을 만들어보세요!</dt></br>
+                <dt>명찰내용</dt>
+                  <dd>이름, 회사 등 명찰에 적용할 정보를 입력합니다.</dd>
+                </br><dt>미리보기</dt>
+                  <dd>입력 값이 적용된 명찰을 미리 확인할 수 있습니다.</dd>
+                </br><dt>만들기</dt>
+                  <dd> 명찰을 PNG 파일로 생성합니다.</dd>
+                </br><dt>공유</dt>
+                  <dd> 생성한 명찰을 SNS로 공유할 수 있습니다.</dd>
+              </dl>
+          </div>
+        </div>
+      </div><!-- <div style="position: absolute;right: 101px;top: 14px;"> -->
+  </nav><!-- <nav class="navbar navbar-dark bg-dark"> -->
+</header>
 
-      <!-- favicon -->
-      <link rel="shortcut icon" id="favicon" type="image/png" href="favicon.png">
-
-      <!-- 스타일 적용 테스트 -->
-      <style type="text/css">
-      </style>
-    </head>
-
-    <body>
-      <div calss = "container-fluid">
-        <div class="nav-bar">
-          <nav class="top-header">
-            <a href="./index.html" title="nametag" class="nametag">
-              <!-- 메뉴 바 왼쪽 : 타이틀 로고 -->
-              <span id ="title"> NAMETAG </span>
-            </a>
-            <div style="float: right!important;margin-right:0;">
-              <div id="informationBox">
-                <div class="bubble">
-                    <dl>
-                      <dt style="font-size: 20px;">
-                        프로그래밍 언어 스타일의 명찰을 만들어보세요!</dt></br>
-                      <dt>명찰내용</dt>
-                        <dd>이름, 회사 등 명찰에 적용할 정보를 입력합니다.</dd>
-                      </br><dt>미리보기</dt>
-                        <dd>입력 값이 적용된 명찰을 미리 확인할 수 있습니다.</dd>
-                      </br><dt>만들기</dt>
-                        <dd> 명찰을 PNG 파일로 생성합니다.</dd>
-                      </br><dt>공유</dt>
-                        <dd> 생성한 명찰을 SNS로 공유할 수 있습니다.</dd>
-                    </dl>
+<div class="container">
+  <div class="row">
+      <div class="col-md-5 offset-md-1" style="background-color:#eee;padding-left: 25px;padding-right: 25px;">
+          <h1 id="inputAreaTitle" class="text-center">명찰내용</h1>
+          <form id="userInput">
+              <div class="form-group">
+                <input type="text" class="form-control" id="InputName" placeholder="이름" maxlength="30">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="InputCompany" placeholder="회사명">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" id="InputPosition" placeholder="직위">
+              </div>
+              <div class="language">
+                <select class="form-control selBox" id="selLanguage">
+                  <option value="c">Language</option>
+                  <option value="c">C</option>
+                  <option value="cpp">C++</option>
+                  <option value="csharp">C#</option>
+                  <option value="objc">Objective-C</option>
+                  <option value="java">JAVA</option>
+                  <option value="javascript">Javascript</option>
+                  <option value="python">Python</option>
+                  <option value="swift">Swift</option>
+                  <option value="ruby">Ruby</option>
+                </select>
+              </div>
+              <div class="theme">
+                <select class="form-control selBox" id="selTheme">
+                  <option value="default">Theme</option>
+                  <option value="default">default</option>
+                  <option value="synhi">synhi</option>
+                  <option value="sunset">sunset</option>
+                  <option value="ghb">ghb</option>
+                  <option value="dark">dark</option>
+                  <option value="mono">mono</option>
+                  <option value="eclipse">eclipse</option>
+                  <option value="ironman">ironman</option>
+                </select>
+              </div>
+              <div class="colorPick text-center">
+                <div style="margin-bottom:5px;">
+                  <input type='text' data-lnk="bg" />
+                  <input type='text' data-lnk="varType" />
+                  <input type='text' data-lnk="varName" />
+                  <input type='text' data-lnk="str" />
+                  <input type='text' data-lnk="comment" />
+                  <input type='text' data-lnk="txt" />
                 </div>
               </div>
-              <span class="btn glyphicon glyphicon-info-sign"
-                    id = "infoToggle" style="padding : 0px; color:white; font-size:20px;"
-                    aria-hidden="true"></span>
-              <div style="clear:right"></div>
+              <div class="text-center">
+                <button type="button" class="btn btn-success" id="generation">만들기</button>
+              </div>
+          </form>
+      </div>
+      <div class="col-md-5">
+        <div class="preveiw-area text-center">
+            <h1 id="previewTitle">미리보기</h1>
+            <div class="nameTag" id="nameTag">
+              <canvas id="cardPreview" width="306" height="510"></canvas>
             </div>
-			<div style="float: right!important;margin-right:10px;margin-top:5px;">
-              <input id="toggleLang" type="checkbox" checked="" data-size="mini" data-off-color="primary" data-on-text="KOR" data-off-text="ENG">
-            </div>
-          </nav>
-        </div>
-
-      <div calss = "container">
-          <!-- 레이아웃을 위한 빈 컬럼 -->
-          <div class="col-md-2"></div>
-          <!-- 입력 영역 -->
-          <div class="col-md-4 setHeight">
-            <div class="custom-area text-center" >
-                <h1 id="inputAreaTitle">명찰내용</h1>
-                <form id="userInput" class="" action="index.html" method="post">
-                <div class="input">
-                    <div class="form-group">
-                      <input type="text" class="form-control" id="InputName" placeholder="name" maxlength="30">
-                    </div>
-                    <div class="form-group">
-                      <input type="text" class="form-control" id="InputCorp" placeholder="corp">
-                    </div>
-                    <div class="form-group">
-                      <input type="text" class="form-control" id="InputPosition" placeholder="position">
-                    </div>
-
-                      <div class="language">
-                        <select class="form-control selBox" id="selLanguage">
-                          <option value="c">Language</option>
-                          <option value="c">C</option>
-                          <option value="cpp">C++</option>
-                          <option value="csharp">C#</option>
-                          <option value="objc">Objective-C</option>
-                          <option value="java">JAVA</option>
-                          <option value="javascript">Javascript</option>
-                          <option value="python">Python</option>
-                          <option value="swift">Swift</option>
-                          <option value="ruby">Ruby</option>
-                        </select>
-                      </div>
-                      <div class="theme">
-                        <select class="form-control selBox" id="selTheme">
-                          <option value="default">Theme</option>
-                          <option value="default">default</option>
-                          <option value="synhi">synhi</option>
-                          <option value="sunset">sunset</option>
-                          <option value="ghb">ghb</option>
-                          <option value="dark">dark</option>
-                          <option value="mono">mono</option>
-                          <option value="eclipse">eclipse</option>
-                          <option value="ironman">ironman</option>
-                        </select>
-                      </div>
-                      <div class="colorPick">
-                        <div style="margin-bottom:5px;">
-                          <input type='text' data-lnk="bg" />
-                          <input type='text' data-lnk="varType" />
-                          <input type='text' data-lnk="varName" />
-                          <input type='text' data-lnk="str" />
-                          <input type='text' data-lnk="comment" />
-                          <input type='text' data-lnk="txt" />
-                        </div>
-                      </div>
-                </div>
-            </div>
-          </div>
-          <!-- 미리보기 영역 -->
-          <div class="col-md-4 bottom-padding">
-            <div class="preveiw-area text-center">
-                <h1 id="previewTitle">미리보기</h1>
-                <div class="nameTag" id="nameTag">
-        					<div class="preview" id="cardPreview">
-        						<span class="varName"><span class="varType"></span> <span class="pointer"></span>name <span class="symbol">=</span> </span>
-        						<span class="atsign"></span><span class="name">"name"</span><span class="semicolon symbol"></span>
-        						<span class="comment"><span class="cstart"></span><span class="position">position</span><span class="cend"></span></span>
-        						<span class="company">company</span>
-        					</div>
-                </div>
-            </div>
-          </div>
-          <div class="col-md-2"></div>
-        </div>
         </div>
       </div>
-
-      <nav class="navbar navbar-default navbar-fixed-bottom" id="bottomInformation" style="z-index:0">
-        <div class="container">
-
-          <div class="action-btn">
-            <input class="btn btn-success generation" type="button" value="만들기">
-              </form>
-          </div>
-
-          <div class="copyright">
-            © 2016 by
-             <a href="https://github.com/CodeNameTag">N8G8</a>
-             <a href="https://github.com/CodeNameTag/CodeNameTag.github.io"> | Github</a>
-          </div>
-
-        </div>
-      </nav>
+  </div><!-- <div class="row"> -->
+</div><!-- <div class="container"> -->
 
 <div id="resultArea" class="text-center" >
   <div id="resultBackground"></div>
   <div id="resultImage" style="padding-top: 10px;"></div>
   <div style="margin-top:20px">
     <input class="btn btn-info share" type="button" value="공유">
-    <a class="btn btn-success" href="#" role="button" id="downloadBtn" download="NameTag.png">저장</a>
+    <a class="btn btn-success" href="#" role="button" id="btnDownload" download="NameTag.png">저장</a>
     </div>
 </div>
 
 <div id="startInfo">
   <div id="resultBackground"></div>
 </div>
+<!-- body 전체 container div-->
+</div>
+
+<footer>
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12">
+            <div class="copyright">
+              © 2016 by
+              <a href="https://github.com/CodeNameTag">N8G8</a>
+              <a href="https://github.com/CodeNameTag/CodeNameTag.github.io"> | Github</a>
+            </div>
+          </div>
+      </div>
+  </div>
+
+</footer>
 <script>
 String.prototype.byteLength = function() {
     var l= 0;
-     
+
     for(var idx=0; idx < this.length; idx++) {
         var c = escape(this.charAt(idx));
          
@@ -196,7 +171,7 @@ String.prototype.byteLength = function() {
     return l;
 };
 
-var getUrlParameter = function getUrlParameter(sParam) {
+const getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
         sParameterName,
@@ -210,7 +185,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
         }
     }
 };
-var cardLangTemplate = {
+const cardLangTemplate = {
   swift : { varType: 'let ', semicolon : false, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false},
   c     : { varType: 'char', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:true, atsign:false },
   cpp   : { varType: 'std::string', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false },
@@ -219,10 +194,9 @@ var cardLangTemplate = {
   python: { varType: '', semicolon: false, commentStart: '\'\'\'', commentEnd: '\'\'\'', pointer:false, atsign:false },
   javascript: { varType: 'var', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false },
   java  : { varType: 'String', semicolon: true, commentStart: '/*', commentEnd: '*/', pointer:false, atsign:false },
-  ruby : { varType: '', semicolon: false, commentStart: '#', commentEnd: '', pointer:false, atsign:false },
-  erlang : { varType: '', semicolon: false, commentStart: '%', commentEnd: '', pointer:false, atsign:false }
+  ruby : { varType: '', semicolon: false, commentStart: '#', commentEnd: '', pointer:false, atsign:false }
 };
-var cardColorTemplate = {
+const cardColorTemplate = {
   default : { bg: '#fff', varType :'#3a95ae', varName : '#000', str : '#b22821', comment : '#008d14', txt:'#000'},
   synhi  : { bg: '#fff', varType :'#007020', varName : '#bb60d5', str : '#4070a0', comment : '#60a0b0', txt:'#000'},
   sunset  : { bg: '#fffceb', varType :'#375788', varName : '#000', str : '#e63b3f', comment : '#d08631', txt:'#000'},
@@ -233,107 +207,168 @@ var cardColorTemplate = {
   ironman : { bg: '#771414', varType :'#ede8e5', varName : '#beba46', str : '#ebdf8c', comment : '#8bd3fb', txt:'#ede8e5' }
 };
 
+const FONT_NOTO_SANS_KR = "'Noto Sans KR', sans-serif";
+
+const NameTagPreview = class {
+  constructor(canvas) {
+    this.dpr = window.devicePixelRatio || 1;
+    this.canvas = canvas;
+
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * this.dpr;
+    canvas.height = rect.height * this.dpr;
+
+    this.ctx = canvas.getContext("2d");
+    this.ctx.font = (20*this.dpr) + 'pt ' + FONT_NOTO_SANS_KR;
+    this.ctx.textAlign = 'left';
+    this.ctx.textBaseline = 'top';
+    this.startX = 20 * this.dpr;
+    this.lineHeight = (20*this.dpr) * 2.8;
+
+    this.langTemplate = cardLangTemplate.c;
+    this.colorTemplate = cardColorTemplate.default;
+
+    this.name = '';
+    this.position = '';
+    this.company = '';
+  }
+
+  _fillBackground(color) {
+    this.ctx.fillStyle = color;
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+
+  // https://codepen.io/bramus/pen/eZYqoO
+  _wrapText(text, x, y, maxWidth, lineHeight) {
+    let words = text.split(' ');
+    let line = '';
+
+    for(let n = 0; n < words.length; n++) {
+      var testLine = line + words[n] + ' ';
+      var metrics = this.ctx.measureText(testLine);
+      var testWidth = metrics.width;
+      if (testWidth > maxWidth && n > 0) {
+        this.ctx.fillText(line, x, y);
+        line = words[n] + ' ';
+        y += lineHeight;
+        console.log('y: '+ y);
+      }
+      else {
+        line = testLine;
+      }
+    }
+    this.ctx.fillText(line, x, y);
+    return y;
+  }
+
+  _printName() {
+    let x = this.startX;
+    let y = 80;
+
+
+    // 변수 타입
+    if (this.langTemplate.varType.length > 0) {
+      let varType = this.langTemplate.varType + ' ';
+      this.ctx.fillStyle = this.colorTemplate.varType;
+      this.ctx.fillText(varType, x, y);
+      x += this.ctx.measureText(varType).width;
+    }
+
+    let varName = 'name = ';
+    // 포인터 처리
+    if (this.langTemplate.pointer)
+      varName = '*' + varName;
+    
+    this.ctx.fillStyle = this.colorTemplate.varName;
+    this.ctx.fillText(varName, x, y);
+
+    let nameString = this.name;
+    
+    if (this.langTemplate === cardLangTemplate.python && nameString.byteLength() >= 20) {
+      nameString = '"""' + nameString + '"""';
+    }else {
+      nameString = '"' + nameString + '"';
+    }
+
+    if (this.langTemplate.atsign) {
+      nameString = '@' + nameString;
+    }
+      
+    y += this.lineHeight;
+    this.ctx.fillStyle = this.colorTemplate.str;
+
+    y = this._wrapText(nameString, this.startX, y, this.canvas.width - this.startX * 2, this.lineHeight);
+
+    return y;
+  }
+
+  _printPosition(y) {
+    let positionString = this.position;
+
+    positionString = this.langTemplate.commentStart + ' ' + positionString + ' ' + this.langTemplate.commentEnd;
+
+    this.ctx.fillStyle = this.colorTemplate.comment;
+    this._wrapText(positionString, this.startX, y, this.canvas.width - this.startX * 2, this.lineHeight)
+    return y;
+  }
+
+  _printCompany() {
+    this.ctx.fillStyle = this.colorTemplate.txt;
+    let x = this.startX;
+    let y = this.canvas.height - 60 * this.dpr;
+    this.ctx.fillText(this.company, x, y);
+    console.log(this.company);
+  }
+
+  updatePreview() {
+    this._fillBackground(this.colorTemplate.bg);
+    let y = this._printName();
+    y += this.lineHeight;
+    this._printPosition(y);
+    this._printCompany();
+  }
+};
+
+const canvas = document.getElementById("cardPreview");
+let preview = new NameTagPreview(canvas);
+
 $(document).ready(function() {
   var isMobile = function() {
     try{ document.createEvent("TouchEvent"); return true; }
     catch(e){ return false; }
   }
-  // 입력 폼에 값이 변하면 프리뷰에 적용되도록 설정
 
+  // 입력 폼에 값이 변하면 프리뷰에 적용되도록 설정
   // 이름
   $('#InputName').on("change paste keyup", function() {
-    //console.log($(this).val());
-    if ($('#selLanguage').val() == 'python') {
-    	var firstLineLength = 14;
-    	if ($(this).val().byteLength() > 14) {
-    		// 파이썬 묶음 변환 ''' 문장 '''
-    		$('#cardPreview .name').text('"""' + $(this).val() + '"""');
-    	}else {
-    		// " "
-    		$('#cardPreview .name').text('"' + $(this).val() + '"');
-    	}
-
-    }else {
-		$('#cardPreview .name').text('"' + $(this).val() + '"');
-    }
-
+    preview.name = $(this).val();
+    preview.updatePreview();
   });
+
   // 직급
   $('#InputPosition').on("change paste keyup", function() {
-	$('#cardPreview .position').text($(this).val());
-	// console.log('length : ' + $(this).val().byteLength() );
-    if ($('#selLanguage').val() == 'python') {
-    	if ($(this).val().byteLength() > 22) {
-			$('#cardPreview .comment .cstart').html("'''<br>");
-    		$('#cardPreview .comment .cend').html("<br>'''");
-    	}else {
-    		$('#cardPreview .comment .cstart').text('# ');
-    		$('#cardPreview .comment .cend').text('');
-    	}
-    	
-    }
+    preview.position = $(this).val();
+    preview.updatePreview();
   });
+
   // 회사
-  $('#InputCorp').on("change paste keyup", function() {
-    //console.log($(this).val());
-    $('#cardPreview .company').text($(this).val());
+  $('#InputCompany').on("change paste keyup", function() {
+    preview.company = $(this).val();
+    preview.updatePreview();
   });
 
   /* 언어 선택 변경 처리 함수 */
-  var changeLanguage = function(lang) {
-    if (typeof cardLangTemplate[lang] == "object") { // 선택한 언어가 배열에 있으면 적용
-      $('#cardPreview .varType').text(cardLangTemplate[lang].varType);
-      // 세미콜론
-      if (cardLangTemplate[lang].semicolon) {
-        $('#cardPreview .semicolon').text(";");
-      }else {
-        $('#cardPreview .semicolon').text("");
-      }
-      // 주석
-      $('#cardPreview .comment .cstart').text(cardLangTemplate[lang].commentStart + ' ');
-      if (cardLangTemplate[lang].commentEnd.length > 0) {
-        $('#cardPreview .comment .cend').text(' ' + cardLangTemplate[lang].commentEnd);
-      }else {
-        $('#cardPreview .comment .cend').text('');
-      }
-      // 포인터
-      if (cardLangTemplate[lang].pointer) {
-        $('#cardPreview .pointer').text('*');
-      }else {
-        $('#cardPreview .pointer').text('');
-      }
+  var changeLanguage = function(lang) {  };
 
-      // @ 기호
-      if (cardLangTemplate[lang].atsign) {
-        $('#cardPreview .atsign').text('@');
-      }else {
-        $('#cardPreview .atsign').text('');
-      }
-
-      // 파이썬일 경우, varName에 display:block 속성 빼기
-      if (lang == 'python' || lang == 'ruby') {
-        $('#cardPreview .varName').css('display', 'inline');
-
-      }else {
-        $('#cardPreview .varName').css('display', 'block');
-
-      }
-
-    }
-  };
   // 언어 선택 선택지에 적용
   $('#selLanguage').change(function() {
     var lang = $(this).val();
-    changeLanguage(lang);
-    $('#InputName').change();
-    $('#InputCorp').change();
-    $('#InputPosition').change();
+    preview.langTemplate = cardLangTemplate[lang];
+    preview.updatePreview();
   });
 
-
-
   // 테마 선택 변경에 따라 컬러 피커 세팅
-  var setSpectrum = function(tempColor) {
+  const updateSpectrum = function(tempColor) {
     $('input[data-lnk="bg"]').spectrum("set", tempColor.bg);
     $('input[data-lnk="varType"]').spectrum("set", tempColor.varType);
     $('input[data-lnk="varName"]').spectrum("set", tempColor.varName);
@@ -342,92 +377,42 @@ $(document).ready(function() {
     $('input[data-lnk="txt"]').spectrum("set", tempColor.txt);
   };
   // 컬러피커 선택 움지임에 맞춰 미리보기에 적용한다.
-  var changeChoiceColor = function(color, lnk) {
-    if (lnk == 'bg') {
-      $('.nameTag').css('background-color', color);
-    }else if(lnk == 'varType') {
-      $('#cardPreview .varType').css('color', color);
-    }else if(lnk == 'varName') {
-      $('#cardPreview .varName').css('color', color);
-    }else if(lnk == 'str') {
-      $('#cardPreview .name').css('color', color);
-      $('#cardPreview .atsign').css('color', color);
-    }else if(lnk == 'comment') {
-      $('#cardPreview .comment').css('color', color);
-    }else if(lnk == 'txt') {
-      $('#cardPreview').css('color', color);
-      $('#cardPreview .symbol').css('color', color);
-    }
+  const changeChoiceColor = function(color, lnk) {
+    preview.colorTemplate[lnk] = color;
+    preview.updatePreview();
   }
-
-  /* 테마 변경 관련 함수 */
-  var changeTheme = function(newTemplate) {
-    if (typeof cardColorTemplate[newTemplate] == "object") {
-      $('.nameTag').css('background-color', cardColorTemplate[newTemplate].bg);
-      $('#cardPreview').css('color', cardColorTemplate[newTemplate].txt);
-      $('#cardPreview .symbol').css('color', cardColorTemplate[newTemplate].txt);
-      $('#cardPreview .varType').css('color', cardColorTemplate[newTemplate].varType);
-      $('#cardPreview .varName').css('color', cardColorTemplate[newTemplate].varName);
-
-      $('#cardPreview .name').css('color', cardColorTemplate[newTemplate].str);
-      $('#cardPreview .atsign').css('color', cardColorTemplate[newTemplate].str);
-
-      $('#cardPreview .comment').css('color', cardColorTemplate[newTemplate].comment);
-
-      setSpectrum(cardColorTemplate[newTemplate])
-
-    }else {
-      console.log('잘못된 테마 이름 : ' + $(this).val());
-    }
-  };
 
   // 테마 변경 선택지에 적용
   $('#selTheme').change(function() {
-    newTemplate = $(this).val();
-    changeTheme(newTemplate);
+    let newTemplate = $(this).val();
+    preview.colorTemplate = cardColorTemplate[newTemplate];
+    preview.updatePreview();
+
+    updateSpectrum(cardColorTemplate[newTemplate])
   });
 
-
-
   // 이미지 팝업 생성
-  $('input.generation').click(function() {
-  // Trying new way
-  	  ga('send', 'event', 'generation', 'click', 'gen');
-      var w = 2200;
-      var h = 2200;
-      var gencanvas = document.createElement('canvas');
-      gencanvas.width = w * 2;
-      gencanvas.height = h * 2;
-      gencanvas.style.width = w + 'px';
-      gencanvas.style.height = h + 'px';
-      var context = gencanvas.getContext('2d');
-      context.scale(2, 2);
-      html2canvas(document.getElementById("nameTag"), {
-        canvas: gencanvas,
-        onrendered: function(canvas) {
-          var offset = $("div.nameTag").offset();
-          var context = canvas.getContext('2d');
-          var imageData = context.getImageData(offset.left*2, offset.top*2, context.canvas.width, context.canvas.height);
-          context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-          canvas.width = 306*2;
-          canvas.height= 510*2;
-          canvas.style.width = 306 + 'px';
-          canvas.style.height = 510 + 'px';
-          context.putImageData(imageData, 0, 0);
-          // document.body.appendChild(canvas);
-          // $('#resultImage').html('<img src="'+imageData+'" class="center-block">');
-          $('#resultImage').html('');
-          $('#resultImage').append(canvas);
-          $('#resultArea').fadeIn('fast');
-          $('input.generation').fadeOut('fast');
-          $('#bottomInformation').fadeOut('fast');
-          var imageData = Canvas2Image.saveAsPNG(canvas);
-          $('#downloadBtn').attr('href', imageData);
-		  $('html,body').scrollTop(0);
-        } // ,
-//        width: 306,
-//        height: 510
-      });
+  $('#generation').click(function() {
+    // Trying new way
+    ga('send', 'event', 'generation', 'click', 'gen');
+    
+    const canvas = document.createElement('canvas');
+    canvas.width = preview.canvas.width;
+    canvas.height = preview.canvas.height;
+
+    $(canvas).css( { width: $(preview.canvas).css('width'), height: $(preview.canvas).css('height')});
+
+    const context = canvas.getContext('2d');
+    context.drawImage(preview.canvas, 0, 0);
+    const imageData = canvas.toDataURL();
+
+    $('#resultImage').html('');
+    $('#resultImage').append(canvas);
+    $('#resultArea').fadeIn('fast');
+    $('#generation').fadeOut('fast');
+    $('#bottomInformation').fadeOut('fast');
+    $('#btnDownload').attr('href', imageData);
+    $('html,body').scrollTop(0);
   });
 
   // 컬러피커 초기화
@@ -438,13 +423,11 @@ $(document).ready(function() {
       color: "#f00",
       showInput: true,
       change: function(color) {
-          var c = color.toHexString(); // #ff0000
-//          console.log('C : ' + c + ', lnk = ' + $(this).attr('data-lnk'));
+          var c = color.toHexString(); // 헥사 컬러 스트링
           changeChoiceColor(c, $(this).attr('data-lnk'));
       },
       move: function(color) {
-          var c = color.toHexString(); // #ff0000
-//          console.log('C : ' + c + ', lnk = ' + $(this).attr('data-lnk'));
+          var c = color.toHexString(); // 헥사 컬러 스트링
           changeChoiceColor(c, $(this).attr('data-lnk'));
       }
   });
@@ -455,9 +438,10 @@ $(document).ready(function() {
     $(this).fadeOut('fast');
     $('#bottomInformation').fadeIn('fast');
   });
-  $('#resultArea #downloadBtn').click(function(e) {
+  $('#resultArea #btnDownload').click(function(e) {
     e.stopPropagation();
   });
+
   // GET 파라미터
   // n : 이름
   // t : 테마
@@ -472,7 +456,7 @@ $(document).ready(function() {
     var n = $('#InputName').val();
     var t = $('#selTheme').val();
     var l = $('#selLanguage').val();
-    var c = $('#InputCorp').val();
+    var c = $('#InputCompany').val();
     var p = $('#InputPosition').val();
 
     var cpBg      = $('input[data-lnk="bg"]').spectrum('get').toHexString();
@@ -509,23 +493,23 @@ $(document).ready(function() {
   });
 
   if (typeof getUrlParameter('n') != 'undefined') {
-    // getp 함수 : 파라미터를 받아오고, 파라미터가 존재하지 않으면 공백, 존재하면 그것의 값을 반환
-    // return은 문자형
-    var getp = function(n) {
-      var p = getUrlParameter(n);
+    
+    // 파라미터를 받아오고, 파라미터가 존재하지 않으면 공백, 존재하면 해당 파라미터의 값을 리턴
+    const getp = function(n) {
+      let p = getUrlParameter(n);
       if (typeof p == 'undefined')
         return '';
       else
         return p;
     };
     // 각 파라미터의 값을 가져온다.
-    var n = getp('n');
-    var t = getp('t');
-    var l = getp('l');
-    var c = getp('c');
-    var p = getp('p');
+    const n = getp('n');
+    const t = getp('t');
+    const l = getp('l');
+    const c = getp('c');
+    const p = getp('p');
 
-    var pickColor = {
+    const pickColor = {
       "bg"      : getp('cpBg'),
       "varType" : getp('cpVarType'),
       "varName" : getp('cpVarName'),
@@ -534,12 +518,11 @@ $(document).ready(function() {
       "txt"     : getp('cpTxt')
     };
 
-
     // 선택지나 값을 설정해주고 및 수정 이벤트 발생(프리뷰 적용이 이벤트를 캐치하여 동작하므로.)
     $('#selLanguage').val(l).change();
     $('#InputName').val(n).change();
     $('#selTheme').val(t).change();
-    $('#InputCorp').val(c).change();
+    $('#InputCompany').val(c).change();
     $('#InputPosition').val(p).change();
 
     // 컬러피커를 세팅하고 미리보기 색상을 바꾼다.
@@ -551,13 +534,10 @@ $(document).ready(function() {
   }else {
     // GET 파라미터가 존재하지 않으면 기본 세팅으로 진행한다.
     console.log('GET 파라미터가 없으므로 기본 세팅으로 이루어집니다.');
-
-    changeLanguage('c');
-    changeTheme('default');
+    $('#selTheme').change();
   }
 
-
-  var showInfo = false;
+  let showInfo = false;
 
   // 백그라운드 인포&배경 off
   $('#startInfo').click(function(){
@@ -596,21 +576,21 @@ var changeLanguagePack = function(isKor) {
       'inputAreaTitle'  : "명찰내용",
       'previewTitle'    : "미리보기" ,
       'InputName'       : "이름",
-      'InputCorp'       : "회사명",
+      'InputCompany'       : "회사명",
       'InputPosition'   : "직위",
       'generation'      : "만들기",
       'share'           : "공유",
-      'downloadBtn'     : "저장"
+      'btnDownload'     : "저장"
     },
     "eng": {
       'inputAreaTitle': "NameTag Info",
       'previewTitle'    : "Preview",
       'InputName'       : "Name",
-      'InputCorp'       : "Crop",
+      'InputCompany'       : "Crop",
       'InputPosition'   : "Position",
       'generation'      : "Generation",
       'share'           : "Share",
-      'downloadBtn'     : "Download"
+      'btnDownload'     : "Download"
     }
   }
   var infoBubble = {
@@ -652,8 +632,7 @@ var changeLanguagePack = function(isKor) {
   for(var index in pack) {
     if (index.substring(0,5) == 'Input') {
       $('#'+index).attr('placeholder', pack[index]);
-    }else if (index == 'generation' || index == 'share') {
-      // console.log('asdf');
+    }else if (index == 'share') {
       $('input.'+index).val(pack[index]);
     }else {
       $('#'+index).text(pack[index]);
@@ -673,11 +652,6 @@ changeLanguagePack(true); // 기본 한국어셋으로.
 
   ga('create', 'UA-80202920-1', 'auto');
   ga('send', 'pageview');
-
-
 </script>
-<!-- body 전체 container div-->
-  </div>
-    </body>
-
+</body>
 </html>

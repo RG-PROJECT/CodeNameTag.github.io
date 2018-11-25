@@ -32,26 +32,11 @@
 }
 
 .copyright{
-	position: fixed;
-	bottom: 0;
-	left: 0;
 	margin: 15px;
 	padding-left: 5%;
 }
 
 .action-btn{
-	position: fixed;
-  bottom: 0;
-	right : 0;
-	/*left: 50%;*/
-  /* Firefox */
-  /*left: -moz-calc( 50% - 65.5px);*/
-  /* WebKit */
-  /*left: -webkit-calc( 50% - 65.5px);*/
-  /* Opera */
-  /*left: -o-calc( 50% - 65.5px);*/
-  /* Standard */
-  /*left: calc( 50% - 65.5px);*/
   margin: 8px;
 	padding-right: 10%;
 }
@@ -89,20 +74,28 @@ a.nametag:hover { color: #fff; text-decoration: none; }
 
 /* 미리보기 처리 관련 스타일 */
 div.nameTag {
+	background: none;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+div.nameTag canvas {
 	width: 306px;
 	height: 510px;
 	border-radius: 10px;
 	border: 1px;
 	border-style: dashed;
 	border-color: #888;
-
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
 }
+
 .preview span{
 	word-break : break-all;
 }
+
 div.nameTag .preview {
 	width: 100%; height: 100%;
 	padding: 80px 10px 10px 10px; box-sizing: border-box;
@@ -117,24 +110,7 @@ div.nameTag .preview {
 	padding-bottom: 70px;
 	background : #ccc;
 }
-.preview .varName {
-	display: block;
-}
-.preview .comment {
-	display: block;
-	line-height: 1.6;
-}
-.preview .position {
-	word-break: break-word;
-}
-.preview .company {
-	position: absolute;
-	bottom : 15px;
-	left : 25px;
-	line-height: 1.6;
-    padding-right: 21px;
-    word-break: break-word;
-}
+
 /* information 말풍선 */
 #informationBox {
   position:relative;

@@ -8,8 +8,7 @@ Make your custom name tag with code!
 
 결과를 이미지 파일로 저장하거나 Twitter로 공유할 수 있습니다.
 
-### 데모
-[CodeNameTag.github.io](http://CodeNameTag.github.io)
+[DEMO](https://rg-project.github.io/CodeNameTag.github.io/.)
 
 ### 선택가능 언어
 - C

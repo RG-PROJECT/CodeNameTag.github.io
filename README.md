@@ -2,7 +2,7 @@ NAMETAG
 ==========
 Make your custom name tag with code!
 
-![screen shot](https://codenametag.github.io/sample.png)
+![screen shot](https://github.com/RG-PROJECT/CodeNameTag.github.io/blob/master/sample.png)
 
 프로그래밍 언어 스타일의 명찰을 생성합니다.
 
